@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../src/js/lib/go-debug.js"></script>
+    <script src="../src/js/lib/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+    <div id="sample">
+        <div id="stateDescription">
+            <p>
+                This diagram represents the state diagram for the Theory of Constraints Simulator 2.0 (TOC-Sim 2.0). It is utilizes the GoJS graphing framework.
+            </p>
+            The data to define the model is stored in the "/js/model.js" file.
+            <p>
+
+            </p>
+        </div>
+        <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 400px"></div>
+        
+            <button id="SaveButton" onclick="save()">Save</button>
+            <button onclick="load()">Load</button>
+            Diagram Model saved in JSON format:
+  <textarea id="mySavedModel" style="width:100%;height:300px">
+{ "nodeKeyProperty": "id",
+  "nodeDataArray": [
+    { "id": 0, "loc": "120 120", "text": "Initial" },
+    { "id": 1, "loc": "330 120", "text": "First down" },
+    { "id": 2, "loc": "226 376", "text": "First up" },
+    { "id": 3, "loc": "60 276", "text": "Second down" },
+    { "id": 4, "loc": "226 226", "text": "Wait" }
+  ],
+  "linkDataArray": [
+    { "from": 0, "to": 0, "text": "up or timer", "curviness": -20 },
+    { "from": 0, "to": 1, "text": "down", "curviness": 20 },
+    { "from": 1, "to": 0, "text": "up (moved)\nPOST", "curviness": 20 },
+    { "from": 1, "to": 1, "text": "down", "curviness": -20 },
+    { "from": 1, "to": 2, "text": "up (no move)" },
+    { "from": 1, "to": 4, "text": "timer" },
+    { "from": 2, "to": 0, "text": "timer\nPOST" },
+    { "from": 2, "to": 3, "text": "down" },
+    { "from": 3, "to": 0, "text": "up\nPOST\n(dblclick\nif no move)" },
+    { "from": 3, "to": 3, "text": "down or timer", "curviness": 20 },
+    { "from": 4, "to": 0, "text": "up\nPOST" },
+    { "from": 4, "to": 4, "text": "down" }
+  ]
+}
+    </textarea>
+    </div>
+</body>
+<script src="js/state_model.js"></script>
+<script src="js/state.js"></script>
+
+<script>
+    $(document).ready(function() {
+        graphInit();
+        load();
+    });
+
+</script>
+
+</html>
