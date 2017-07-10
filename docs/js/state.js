@@ -38,7 +38,8 @@ function graphInit() {
             fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
             toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true,
             cursor: "pointer"
-          }),
+          },
+         new go.Binding("fill")),
         $(go.TextBlock,
           {
             font: "bold 11pt helvetica, bold arial, sans-serif",
