@@ -1,3 +1,10 @@
+/**
+ * This code is the base sample code from GoJS. I modified it to a "fill" binding to the node objects
+ * to allow different colors to be defined in the model.
+ * 
+ * Modified by: Corey Willinger
+ */
+
 function graphInit() {
     if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
     var $ = go.GraphObject.make;  // for conciseness in defining templates
