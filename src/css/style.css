@@ -1,0 +1,56 @@
+/* null margins and padding to give cross-browser baseline */
+
+/*---------Element Selectors--------*/
+html,
+body,
+ul,
+ol,
+li,
+form,
+fieldset,
+legend,
+img {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+main {
+    width:1000px;
+    height: 100%;
+    margin: 0 auto;
+    position:relative;
+    top: -30px;         /* offset to accomodate menu */
+    padding-top: 10px;
+}
+
+
+
+/*----------Class Selectors--------*/
+
+
+/*----------General Classes---------*/
+.center{
+    text-align: center;
+}
+
+
+/*----------Id Selectors-----------*/
+#header{
+    text-align: center;
+    height:100px;
+    background-color: #AAA;
+    padding-top: 20px;
+}
+
+
+/*--------------Menu----------------*/
+
+
+
