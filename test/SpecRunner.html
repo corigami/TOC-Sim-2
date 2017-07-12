@@ -1,26 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>Jasmine Spec Runner v2.6.4</title>
+    <meta charset="utf-8">
+    <title>Jasmine Spec Runner v2.6.4</title>
 
-  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.6.4/jasmine_favicon.png">
-  <link rel="stylesheet" href="lib/jasmine-2.6.4/jasmine.css">
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.6.4/jasmine_favicon.png">
+    <link rel="stylesheet" href="lib/jasmine-2.6.4/jasmine.css">
+    <link rel="stylesheet" href="../src/css/menu.css">
+    <link rel="stylesheet" href="../src/css/style.css">
 
-  <script src="lib/jasmine-2.6.4/jasmine.js"></script>
-  <script src="lib/jasmine-2.6.4/jasmine-html.js"></script>
-  <script src="lib/jasmine-2.6.4/boot.js"></script>
-
-  <!-- include source files here... -->
-  <script src="src/Player.js"></script>
-  <script src="src/Song.js"></script>
-
-  <!-- include spec files here... -->
-  <script src="spec/SpecHelper.js"></script>
-  <script src="spec/PlayerSpec.js"></script>
+    <script src="../src/js/lib/jquery-3.2.1.js"></script>
+    <script src="lib/jasmine-2.6.4/jasmine.js"></script>
+    <script src="lib/jasmine-2.6.4/jasmine-html.js"></script>
+    <script src="lib/jasmine-2.6.4/boot.js"></script>
 
 </head>
 
 <body>
+    <header id="header">
+        <h1>header placeholder</h1>
+    </header>
+    <nav role="navigation">
+        <div id="menuToggle">
+            <input type="checkbox" />
+            <!-- for :checked attribute -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="#">
+                    <li>Scenario 1</li>
+                </a>
+                <a href="#">
+                    <li>Scenario 2</li>
+                </a>
+                <a href="#">
+                    <li>Scenario 3</li>
+                </a>
+                <a href="#">
+                    <li>Custom</li>
+                </a>
+            </ul>
+        </div>
+    </nav>
+    <main id="main" class="center">
+        Main content container
+    </main>
 </body>
+
+<!-- include source files here... -->
+<script src="../src/js/menu.js"></script>
+<script src="../src/js/view.js"></script>
+<script src="../src/js/controller.js"></script>
+
+<!-- include spec files here... -->
+<script src="spec/ControllerSpec.js"></script>
+<script src="spec/ViewSpec.js"></script>
+  <script src="spec/MenuSpec.js"></script>
+
+
 </html>
