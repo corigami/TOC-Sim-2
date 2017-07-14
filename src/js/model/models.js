@@ -8,10 +8,10 @@
  * @constructor
  */
 var Model = function () {
-    self = this;
-    this.name = "BaseModel";
+    var self = this;
+    self.name = "BaseModel";
 
-    this.getScenarios = function () {
+    self.getScenarios = function () {
         //do nothing
     };
 }
@@ -21,21 +21,21 @@ var Model = function () {
  * @constructor
  */
 var LocalModel = function (array) {
-    this.name = "LocalModel";
+    var self = this;
+    self.name = "LocalModel";
+
     var i =0;
     scenarioDefinitions.forEach(function (el) {
         array[i] = new Scenario(el);
         i++;
     });
 
-    this.getScenarios = function(){
-
+    self.getScenarios = function(){
         return;
-    }
+    };
 
-
-    this.getName = function () {
-        return name;
-    }
+    self.getName = function () {
+        return self.name;
+    };
 };
 LocalModel.prototype = Object.create(Model.prototype);

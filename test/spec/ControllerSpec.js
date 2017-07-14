@@ -18,8 +18,9 @@ describe("Controller Tests", function () {
         });
 
         it("Should load the Local Model by default", function(){
-            expect(self.controller.getModel().getName()).toEqual("LocalModel");
-        })
+
+            expect(self.controller.getModelName()).toEqual("LocalModel");
+        });
 
         it("Should retrieve scenarios from the model, function", function(){
             var numOfScenarios = self.controller.getScenarios().length;

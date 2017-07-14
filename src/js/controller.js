@@ -1,9 +1,10 @@
 var Controller = function(_view) {
     var self = this;
+
     self.view = _view;
+    self.view.setController(this);
     self.scenarios = [];
     self.model = new LocalModel(self.scenarios);
-
 
     self.resetAll = function(){
         self.view.resetDisplay();
@@ -16,19 +17,19 @@ var Controller = function(_view) {
 
     self.getScenarios = function(){
         return self.scenarios;
-    }
+    };
 
-    self.setModel = function(model){
-        self.model = model;
-    }
+    self.setModel = function(_model){
+        self.model = _model;
+    };
 
     self.getModel = function(){
         return self.model;
-    }
+    };
 
     self.getModelName = function(){
         return self.model.getName();
-    }
+    };
 };
 
 /*

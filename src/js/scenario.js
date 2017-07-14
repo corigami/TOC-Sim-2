@@ -12,7 +12,7 @@ var Scenario = function(data){
      * returns our array of nodes;
      * @returns {Array} of Nodes
      */
-    var getNodes = function(){
+    self.getNodes = function(){
         return nodes;
     }
 
@@ -20,15 +20,15 @@ var Scenario = function(data){
      *
      * @returns {String} Name of Scenario
      */
-    var getName = function(){
-        return name;
+    self.getName = function(){
+        return self.name;
     }
 
     /**
      * Returns type of simulation
      * @returns {String} simulation type.
      */
-    var getSimType = function(){
+    self.getSimType = function(){
       return simType;
     };
 
