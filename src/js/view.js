@@ -1,31 +1,41 @@
 /* global $, Controller */
 var View = function () {
-    var self = this;
-    self.controller;
-    self.myMenu = new Menu();
+    var controller,
+        myMenu,
+        $main,
+        $menu;
 
-    self.$main = $('#main');
-    self.$menu = $('#menu');
-
-    self.setController = function(controller){
-        this.controller = controller;
-    }
-
-    self.resetDisplay = function () {
-        self.$main.text("The data has been reset");
-        self.$menu.empty();
-        var myScenarios = self.controller.getScenarios();
-        self.myMenu.buildMainMenu(myScenarios);
-        self.$menu = self.myMenu.getMenu();
-
-    };
-
-    self.getMain = function(){
-        return self.$main;
-    };
-
-    self.setMenu = function(){
-      self.$menu.replaceWith(self.myMenu.getMenu());
-    };
+    this.init();
 };
 
+/**
+ * Initializes the view to its initial state
+ */
+View.prototype.init = function () {
+    this.myMenu = new Menu();
+    this.$main = $('#main');
+    this.$menu = $('#menu');
+};
+
+/**
+ * Resets the display to its initial state.
+ */
+View.prototype.resetDisplay = function () {
+    this.$main.text("The data has been reset");
+    this.$menu.empty();
+    var myScenarios = this.controller.getScenarios();
+    this.myMenu.buildMainMenu(myScenarios);
+    this.$menu = this.myMenu.getMenu();
+};
+
+View.prototype.getMain = function(){
+    return this.$main;
+};
+
+View.prototype.setMenu = function(){
+    this.$menu.replaceWith(this.myMenu.getMenu());
+};
+
+View.prototype.setController = function(controller){
+    this.controller = controller;
+}
