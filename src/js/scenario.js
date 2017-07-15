@@ -1,35 +1,47 @@
 /**
- * Defines scenario Data and helper functions
+ * Defines scenario objeccts, data and helper functions
  * @constructor
  */
-var Scenario = function(data){
-    var self = this;
-        self.name = data.name,
-        self.simType = data.simType,
-        self.nodes = data.nodes;
+var Scenario = function (data) {
+    var name,
+        simType,
+        nodes;
 
-    /**
-     * returns our array of nodes;
-     * @returns {Array} of Nodes
-     */
-    self.getNodes = function(){
-        return nodes;
-    }
+    this.init(data);
+};
 
-    /**
-     *
-     * @returns {String} Name of Scenario
-     */
-    self.getName = function(){
-        return self.name;
-    }
-
-    /**
-     * Returns type of simulation
-     * @returns {String} simulation type.
-     */
-    self.getSimType = function(){
-      return simType;
-    };
-
+/**
+ * Initializes data.  Data should come from persistence adapter or storage class
+ * @param data data to initialize the controller with.
+ */
+Scenario.prototype.init = function (data) {
+    this.name = data.name;
+    this.simType = data.simType;
+    this.nodes = data.nodes;
 }
+
+/**
+ * returns our array of nodes;
+ * @returns {Array} of Nodes
+ */
+Scenario.prototype.getNodes = function () {
+    return this.nodes;
+}
+
+/**
+ *
+ * @returns {String} Name of Scenario
+ */
+Scenario.prototype.getName = function () {
+    return this.name;
+};
+
+/**
+ * Returns type of simulation
+ * @returns {String} simulation type.
+ */
+Scenario.prototype.getSimType = function () {
+    return this.simType;
+};
+
+
