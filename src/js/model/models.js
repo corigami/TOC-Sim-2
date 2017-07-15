@@ -34,7 +34,7 @@ LocalModel.prototype = Object.create(Model.prototype);
  * @param array Location
  */
 LocalModel.prototype.init = function(array){
-    this.name = "LocalModel"
+    this.name = "LocalModel";
     var i =0;
     scenarioDefinitions.forEach(function (el) {
         array[i] = new Scenario(el);
@@ -42,10 +42,10 @@ LocalModel.prototype.init = function(array){
     });
 };
 
-self.getScenarios = function(){
-    return;
+LocalModel.prototype.getScenarios = function(){
+    return null;
 };
 
-self.getName = function () {
-    return self.name;
+LocalModel.prototype.getName = function () {
+    return this.name;
 };
