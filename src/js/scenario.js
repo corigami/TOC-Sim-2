@@ -18,7 +18,7 @@ Scenario.prototype.init = function (data) {
     this.name = data.name;
     this.simType = data.simType;
     this.nodes = data.nodes;
-}
+};
 
 /**
  * returns our array of nodes;
@@ -26,7 +26,7 @@ Scenario.prototype.init = function (data) {
  */
 Scenario.prototype.getNodes = function () {
     return this.nodes;
-}
+};
 
 /**
  *

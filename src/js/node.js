@@ -1,18 +1,18 @@
+
 /**
- * @description - object that represents scenario data and methods
+ * Defines a node object (station)
  * @constructor
  */
-var Scenario = function () {
-    'use strict';
-    var self = this;
-    self.scenarios = Scenarios; //These are defined in the scenario.js file
+var Node = function () {
 
-    /**
-     * @description - returns model location
-     * @returns array of locations
-     */
-    self.getAllScenarios = function () {
-        return self.scenarios;
-    };
+    this.init();
+
+};
+
+
+/**
+ * Initializes the object
+ */
+Node.prototype.init = function(){
 
 };

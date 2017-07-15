@@ -1,26 +1,34 @@
 /* global */
 
-function Menu(){
-    var self = this;
-    self.$menuElement = $('<ul id="menu"></ul>');
-    self.menuTitle="";
+/**
+ * Defines the menu object
+ * @constructor
+ */
+var Menu = function(){
+    var menuTItle,
+        $menuElement;
 
-    self.clear = function () {
-        $menuElement = $('<ul id="menu" ></ul>');
-    };
-    self.getMenu = function() {
-        return self.$menuElement;
+    this.init();
 
-    };
+};
 
-    self.buildMainMenu = function(scenarios) {
-        self.menuTitle = "Main Menu";
-        var i =0;
-        scenarios.forEach(function(scenario){
-           var menuItem = $('<li></li>');
-           menuItem.attr("id","scenario-menuItem-" + i++);
-           menuItem.text(scenario.getName());
-           self.$menuElement.append(menuItem);
-        });
-    };
-}
+Menu.prototype.init = function(){
+    this.$menuElement = $('<ul id="menu"></ul>');
+    this.menuTitle="";
+};
+
+Menu.prototype.buildMainMenu = function(scenarios) {
+    this.menuTitle = "Main Menu";
+    var i =0;
+    scenarios.forEach(function(scenario){
+        var menuItem = $('<li></li>');
+        menuItem.attr("id","scenario-menuItem-" + i++);
+        menuItem.text(scenario.getName());
+        this.$menuElement.append(menuItem);
+    });
+};
+
+Menu.prototype.getMenu = function() {
+    return this.$menuElement;
+
+};
