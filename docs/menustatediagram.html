@@ -1,0 +1,45 @@
+<!-- 
+    Author: GoJS
+    Modified by: Corey Willinger
+    -->
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu State Diagram for ToC2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../src/js/lib/go-debug.js"></script>
+    <script src="../src/js/lib/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+    <div id="stateDescription">
+        <h1>Menu Activity Diagram<br> </h1>
+        <p>
+            This diagram represents the menu state diagram for the Theory of Constraints Simulator 2.0 (TOC-Sim 2.0). It is utilizes the GoJS
+            graphing framework.
+        </p>
+        The data to define the model is stored in the "/js/meni_state_model.js" file. Changes can be made to the model, click save and
+        then paste the code into the state_model.js file.
+    </div>
+    <!-- Diagram is attached here -->
+    <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 600px"></div>
+    <button id="SaveButton" onclick="save()">Save</button>
+    <button onclick="load()">Load</button> <br> Diagram Model saved in JSON format:
+    <!-- Diagram model details will be output here -->
+    <textarea id="mySavedModel" style="width:100%;height:300px">
+        </textarea>
+</body>
+<script src="js/menu_state_model.js"></script>
+<script src="js/state.js"></script>
+
+<script>
+    $(document).ready(function () {
+        graphInit();
+        load();
+    });
+</script>
+
+</html>
