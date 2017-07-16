@@ -9,11 +9,11 @@ var Menu = function(){
         $menuElement;
 
     this.init();
-
 };
 
 Menu.prototype.init = function(){
     this.$menuElement = $('<ul id="menu"></ul>');
+    console.log(this.$menuElement);
     this.menuTitle="";
 };
 
@@ -25,7 +25,7 @@ Menu.prototype.buildMainMenu = function(scenarios) {
         menuItem.attr("id","scenario-menuItem-" + i++);
         menuItem.text(scenario.getName());
         this.$menuElement.append(menuItem);
-    });
+    },this);
 };
 
 Menu.prototype.getMenu = function() {

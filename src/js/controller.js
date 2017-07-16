@@ -35,8 +35,8 @@ Controller.prototype.getScenarios = function(){
     return this.scenarios;
 };
 
-Controller.prototype.setModel = function(_model){
-    this.model = _model;
+Controller.prototype.setModel = function(model){
+    this.model = model;
 };
 
 Controller.prototype.getModel = function(){
