@@ -36,6 +36,7 @@ Menu.prototype.buildScenarioMenu = function(scenarios) {
         menuItem.append('<p class="scenario-title">' + scenario.getName() + '</p>');
         menuItem.append('<p class="scenario-desc">' + scenario.getDescription() + '</p>');
         menuItem.click(function(){
+            toggleMenu();
             alert("you clicked " + scenario.getName());
         });
         $menuList.append(menuItem);
@@ -46,3 +47,13 @@ Menu.prototype.getMenu = function() {
     return this.$menuElement;
 
 };
+
+/**
+ * Helper function to handle hiding and sowing the menu.
+ */
+var toggleMenu = function(){
+  var checkbox = $('#menuCheckbox');
+  var status = checkbox.prop('checked');
+    checkbox.prop('checked', !status);
+};
+
