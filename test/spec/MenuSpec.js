@@ -14,12 +14,15 @@ describe("Menu Tests", function () {
     it("getMenu should return a DIV element", function () {
         var el = self.view.myMenu.getMenu();
         expect(el).not.toBeNull();
-        expect(el.prop('nodeName')).toEqual("UL");
+        expect(el.prop('nodeName')).toEqual("DIV");
     });
 
-    it("buildMainMenu() should result in a menu with scenario items plus a custom option", function () {
-        self.view.myMenu.buildMainMenu(self.controller.getScenarios());
-        console.log(self.view.myMenu.getMenu());
+    it("buildScenarioMenu() should result in a menu with scenario items plus a custom option", function () {
+        self.view.myMenu.buildScenarioMenu(self.controller.getScenarios());
         self.view.setMenu();
-          });
+    });
 });
+
+    //TODO add test for onclick function.
+
+    //TODO add test for loading scenario options once a scenario is picked});

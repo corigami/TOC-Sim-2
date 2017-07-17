@@ -1,11 +1,12 @@
 var scenarioDefinitions = [
     {
         name: 'scenario 1',
+        description: 'Standard Model, all stations produce equally.',
         simType: 'Normal',
         nodes: [{
             idNumber: 1,
             baseCapacity: 7,
-            initWIP: 0,
+            initWIP: 4,
             capRange: 5,
             varFactor: 2,
             unitName: 'item 1'
@@ -20,11 +21,11 @@ var scenarioDefinitions = [
         },
         {
             idNumber: 3,
-            baseCapacity: 3.5,
+            baseCapacity: 7,
             initWIP: 4,
-            capRange: 2.5,
-            varFactor: 1,
-            unitName: 'item 1'
+            capRange: 5,
+            varFactor: 2,
+            unitName: 'item 3'
         },
         {
             idNumber: 4,
@@ -32,7 +33,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 2'
+            unitName: 'item 4'
         },
         {
             idNumber: 5,
@@ -40,8 +41,8 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 3'
+            unitName: 'item 5'
         }
         ]
     }
-]
+];

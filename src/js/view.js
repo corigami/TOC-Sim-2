@@ -24,7 +24,7 @@ View.prototype.resetDisplay = function () {
     this.$main.text("The data has been reset");
     this.$menu.empty();
     var myScenarios = this.controller.getScenarios();
-    this.myMenu.buildMainMenu(myScenarios);
+    this.myMenu.buildScenarioMenu(myScenarios);
     this.$menu = this.myMenu.getMenu();
 };
 

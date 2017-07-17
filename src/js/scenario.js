@@ -4,6 +4,7 @@
  */
 var Scenario = function (data) {
     var name,
+        description,
         simType,
         nodes;
 
@@ -16,6 +17,7 @@ var Scenario = function (data) {
  */
 Scenario.prototype.init = function (data) {
     this.name = data.name;
+    this.description = data.description;
     this.simType = data.simType;
     this.nodes = data.nodes;
 };
@@ -44,4 +46,10 @@ Scenario.prototype.getSimType = function () {
     return this.simType;
 };
 
-
+/**
+ * Returns description of scenario
+ * @returns {String}
+ */
+Scenario.prototype.getDescription = function(){
+    return this.description;
+}

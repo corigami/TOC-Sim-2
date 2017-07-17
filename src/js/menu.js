@@ -12,19 +12,33 @@ var Menu = function(){
 };
 
 Menu.prototype.init = function(){
-    this.$menuElement = $('<ul id="menu"></ul>');
-    console.log(this.$menuElement);
+    this.$menuElement = $('#menu');
     this.menuTitle="";
 };
 
-Menu.prototype.buildMainMenu = function(scenarios) {
-    this.menuTitle = "Main Menu";
+
+/**
+ * Creates the menu for scenario selection
+ * @param scenarios data build the menu from.  Must be an array of Scenario objects
+ */
+Menu.prototype.buildScenarioMenu = function(scenarios) {
+    this.$menuElement.empty();
+    this.menuTitle = "Choose a Scenario";
+    var $menuHeader =  $('<div id="menu-header">' + this.menuTitle + '</div>');
+    var $menuList = $('<ul id="menuList"></ul>');
+    this.$menuElement.append($menuHeader);
+    this.$menuElement.append($menuList);
     var i =0;
     scenarios.forEach(function(scenario){
         var menuItem = $('<li></li>');
         menuItem.attr("id","scenario-menuItem-" + i++);
-        menuItem.text(scenario.getName());
-        this.$menuElement.append(menuItem);
+        menuItem.attr("class","scenario-menuItem");
+        menuItem.append('<p class="scenario-title">' + scenario.getName() + '</p>');
+        menuItem.append('<p class="scenario-desc">' + scenario.getDescription() + '</p>');
+        menuItem.click(function(){
+            alert("you clicked " + scenario.getName());
+        });
+        $menuList.append(menuItem);
     },this);
 };
 
