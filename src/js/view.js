@@ -3,7 +3,8 @@ var View = function () {
     var controller,
         myMenu,
         $main,
-        $menu;
+        $menu,
+        $headerText;
 
     this.init();
 };
@@ -12,9 +13,10 @@ var View = function () {
  * Initializes the view to its initial state
  */
 View.prototype.init = function () {
-    this.myMenu = new Menu();
+    this.myMenu = new Menu(this);
     this.$main = $('#main');
     this.$menu = $('#menu');
+    this.$headerText = $('#headertext');
 };
 
 /**
@@ -26,6 +28,7 @@ View.prototype.resetDisplay = function () {
     var myScenarios = this.controller.getScenarios();
     this.myMenu.buildScenarioMenu(myScenarios);
     this.$menu = this.myMenu.getMenu();
+    this.setHeader('ToC Simulator 2.0');
 };
 
 View.prototype.getMain = function(){
@@ -34,8 +37,13 @@ View.prototype.getMain = function(){
 
 View.prototype.setMenu = function(){
     this.$menu.replaceWith(this.myMenu.getMenu());
+
 };
 
 View.prototype.setController = function(controller){
     this.controller = controller;
-}
+};
+
+View.prototype.setHeader = function(text){
+    this.$headerText.text(text);
+};

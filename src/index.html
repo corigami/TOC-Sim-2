@@ -11,29 +11,31 @@
 
 <body>
     <header id="header">
-        <h1>header placeholder</h1>
+        <h1 id="headertext">header placeholder</h1>
     </header>
-<nav role="navigation">
-  <div id="menuToggle">
-    <input type="checkbox" /> <!-- for :checked attribute -->
-    <span></span>
-    <span></span>
-    <span></span>
-    <ul id="menu">
-      <a href="#"><li>Scenario 1</li></a>
-      <a href="#"><li>Scenario 2</li></a>
-      <a href="#"><li>Scenario 3</li></a>
-      <a href="#"><li>Custom</li></a>
-    </ul>
-  </div>
-</nav>
+    <nav>
+        <div id="menuToggle">
+            <input title="menuCheckBox" id="menuCheckbox" type="checkbox" />
+            <!-- for :checked attribute -->
+            <span></span>
+            <span></span>
+            <span></span>
+            <div id="menu">
+            </div>
+        </div>
+    </nav>
     <main id="main" class="center">
         Main content container
     </main>
 </body>
-<script src="js/menu.js"></script>
-<script src="js/view.js"></script>
-<script src="js/controller.js"></script>
-<scirpt src="js/lib/go-debug.js"></scirpt>
+
+<!-- include source files here... -->
+<script src="../src/js/menu.js"></script>
+<script src="../src/js/view.js"></script>
+<script src="../src/js/model/scenarioDefinitions.js"></script>
+<script src="../src/js/model/models.js"></script>
+<script src="../src/js/scenario.js"></script>
+<script src="../src/js/controller.js"></script>
+
 
 </html>

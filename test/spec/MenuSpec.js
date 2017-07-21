@@ -18,8 +18,27 @@ describe("Menu Tests", function () {
     });
 
     it("buildScenarioMenu() should result in a menu with scenario items plus a custom option", function () {
-        self.view.myMenu.buildScenarioMenu(self.controller.getScenarios());
+        var scenarios = self.controller.getScenarios(),
+            numScenarios = scenarios.length,
+            numMenuItems;
+        self.view.myMenu.buildScenarioMenu(scenarios);
         self.view.setMenu();
+        numMenuItems = $('#menuList').find('li').length;
+        expect(numMenuItems).toEqual(numScenarios + 1);
+
+    });
+
+    it("buildScenarioDetailsMenu should result in new menu being generated",function(){
+        var scenarios = self.controller.getScenarios();
+        self.view.myMenu.buildScenarioDetailsMenu(scenarios[0]);
+       expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");
+        expect(self.view.myMenu.getMenuTitle()).toEqual(scenarios[0].getName() + ' Details');
+    });
+
+    it("buildCustomScenarioMenu should result in new menu being generated",function() {
+        self.view.myMenu.buildCustomScenarioMenu();
+        expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");
+        expect(self.view.myMenu.getMenuTitle()).toEqual("Input Custom Parameters");
     });
 });
 
