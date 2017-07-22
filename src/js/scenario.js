@@ -3,10 +3,10 @@
  * @constructor
  */
 var Scenario = function (data) {
-    var name,
-        description,
-        simType,
-        nodes;
+    this.name;
+    this.description;
+    this.simType;
+    this.nodes;
 
     this.init(data);
 };
@@ -19,7 +19,14 @@ Scenario.prototype.init = function (data) {
     this.name = data.name;
     this.description = data.description;
     this.simType = data.simType;
-    this.nodes = data.nodes;
+    this.nodes = [];
+
+    //create an array of Nodes from the raw data.
+    data.nodes.forEach(function (nodeData) {
+        var node = new Node(nodeData);
+        this.nodes.push(node);
+    }, this);
+
 };
 
 /**
@@ -50,6 +57,6 @@ Scenario.prototype.getSimType = function () {
  * Returns description of scenario
  * @returns {String}
  */
-Scenario.prototype.getDescription = function(){
+Scenario.prototype.getDescription = function () {
     return this.description;
 }

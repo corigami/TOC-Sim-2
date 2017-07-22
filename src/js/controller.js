@@ -3,23 +3,25 @@
  * @param view The view connected to the controller
  * @constructor
  */
-var Controller = function(view) {
-    var view,
-        scenarios,
-        model;
-
-    this.init(view);
+var Controller = function() {
+        this.view;
+        this.scenarios;
+        this.model;
+    this.init();
 };
 
 /**
- * Initializes the controllerr
- * @param view
+ * Initializes the controller
  */
-Controller.prototype.init = function(view){
-    this.view = view;
+Controller.prototype.init = function(){
+    this.view = new View();
     this.view.setController(this);
     this.scenarios = [];
+
+    //Only have a local model at this point, so hard coding for now.
+    //This can be extended to support pulling scenarios from a database
     this.model = new LocalModel(this.scenarios);
+
 };
 
 Controller.prototype.resetAll = function(){

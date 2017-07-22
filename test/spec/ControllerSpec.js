@@ -2,9 +2,15 @@
 
 describe("Controller Tests", function () {
     var self = this;
-    self.controller = new Controller(new View());
-    beforeEach(function () {
 
+    describe("Constructor Tests", function () {
+        it("should build a controller object", function () {
+            self.controller = new Controller();
+            expect(self.controller).not.toBeNull();
+            expect(self.controller.getScenarios()).not.toBeNull();
+            expect(self.controller.getModel()).not.toBeNull();
+            expect(self.controller.getView()).not.toBeNull();
+        });
     });
 
     describe("Reset All", function () {

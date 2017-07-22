@@ -1,10 +1,10 @@
 /* global $, Controller */
 var View = function () {
-    var controller,
-        myMenu,
-        $main,
-        $menu,
-        $headerText;
+        this.controller;
+        this.myMenu;
+        this.$main;
+        this.$menu;
+        this.$headerText;
 
     this.init();
 };

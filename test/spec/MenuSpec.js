@@ -28,20 +28,20 @@ describe("Menu Tests", function () {
 
     });
 
-    it("buildScenarioDetailsMenu should result in new menu being generated",function(){
+    it("buildScenarioDetailsMenu should result in new menu being generated", function () {
         var scenarios = self.controller.getScenarios();
         self.view.myMenu.buildScenarioDetailsMenu(scenarios[0]);
-       expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");
+        expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");
         expect(self.view.myMenu.getMenuTitle()).toEqual(scenarios[0].getName() + ' Details');
     });
 
-    it("buildCustomScenarioMenu should result in new menu being generated",function() {
+    it("buildCustomScenarioMenu should result in new menu being generated", function () {
         self.view.myMenu.buildCustomScenarioMenu();
         expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");
-        expect(self.view.myMenu.getMenuTitle()).toEqual("Input Custom Parameters");
+        expect(self.view.myMenu.getMenuTitle()).toEqual("Input Custom Node Parameters");
     });
 });
 
-    //TODO add test for onclick function.
+//TODO add test for onclick function.
 
-    //TODO add test for loading scenario options once a scenario is picked});
+//TODO add test for loading scenario options once a scenario is picked});

@@ -6,7 +6,8 @@
  */
 var Menu = function(view){
         var menuTitle,
-        $menuElement;
+        $menuElement,
+        $menuList;
         this.view = view;
 
     this.init(view);
@@ -15,6 +16,7 @@ var Menu = function(view){
 Menu.prototype.init = function(){
     this.$menuElement = $('#menu');
     this.menuTitle="";
+    this.$menuList = null;
 };
 
 
@@ -26,15 +28,10 @@ Menu.prototype.init = function(){
 Menu.prototype.buildScenarioMenu = function(scenarios) {
     var myView= this.view;
     var menu = this;
-    this.$menuElement.empty();
-    this.menuTitle = "Choose a Scenario";
-    var $menuHeader =  $('<div id="menu-header">' + this.menuTitle + '</div>');
-    var $menuList = $('<ul id="menuList"></ul>');
-    this.$menuElement.append($menuHeader);
-    this.$menuElement.append($menuList);
-    var i =0;
+    this.buildMenuHeader("Choose a Scenario");
 
     //Build custom scenario option
+    var i =0;
     var menuItem = $('<li></li>');
     menuItem.attr("id","scenario-menuItem-" + i++);
     menuItem.attr("class","scenario-menuItem");
@@ -45,7 +42,7 @@ Menu.prototype.buildScenarioMenu = function(scenarios) {
         myView.setHeader("Custom Scenario");
         menu.buildCustomScenarioMenu();
     });
-    $menuList.append(menuItem);
+    this.$menuList.append(menuItem);
 
     //Build list of scenario options
     scenarios.forEach(function(scenario){
@@ -59,7 +56,7 @@ Menu.prototype.buildScenarioMenu = function(scenarios) {
             myView.setHeader(scenario.getName());
             menu.buildScenarioDetailsMenu(scenario);
         });
-        $menuList.append(menuItem);
+        this.$menuList.append(menuItem);
     },this);
 };
 
@@ -69,11 +66,28 @@ Menu.prototype.buildScenarioMenu = function(scenarios) {
  */
 Menu.prototype.buildScenarioDetailsMenu = function(scenario){
     //TODO finish logic for this function
+    var myView= this.view;
+    var menu = this;
+
+    //build menu header
+    this.buildMenuHeader(scenario.getName() + ' Details');
+
+    //build menu item to display scenario info
+    var i =0;
     var nodes = scenario.getNodes();
 
+    //for each node create a menu item that shows its parameters.
     nodes.forEach(function(node){
-        console.log(node);
-    });
+        var nodeItem = $('<li></li>');
+        nodeItem.attr("id","scenario-node-details" + i++);
+        nodeItem.attr("class","scenario-node-details");
+
+        var nodeDetailContainer = $('<div class="node-details">Node '+ node.idNum +'</div>');
+        nodeDetailContainer.append('<p> Name: ' + node.unitName + '</p>');
+        nodeItem.append(nodeDetailContainer);
+
+        this.$menuList.append(nodeItem);
+    },this);
 
 };
 
@@ -82,6 +96,17 @@ Menu.prototype.buildScenarioDetailsMenu = function(scenario){
  */
 Menu.prototype.buildCustomScenarioMenu = function(){
    //TODO build logic for this function
+    this.menuTitle = "Input Custom Node Parameters"
+};
+
+Menu.prototype.buildMenuHeader = function(headerText){
+    //empty the menu since we are rebuilding it
+    this.$menuElement.empty();
+    this.menuTitle = headerText;
+    var $menuHeader =  $('<div id="menu-header">' + this.menuTitle + '</div>');
+    this.$menuList = $('<ul id="menuList"></ul>');
+    this.$menuElement.append($menuHeader);
+    this.$menuElement.append(this.$menuList);
 };
 
 

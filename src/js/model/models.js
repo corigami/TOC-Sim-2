@@ -13,14 +13,14 @@ var Model = function () {
     this.init();
 };
 /**
- * Initializes the model.  Loads data from peristience into the passed array
+ * Initializes the model.  Loads data from persistence into the passed array
  */
 Model.prototype.init = function(){
     this.name =  "BaseModel";
 };
 
 /**
- * Extends the model for local persistance;
+ * Extends the model for local persistence;
  * @constructor
  */
 var LocalModel = function (array) {
@@ -30,7 +30,7 @@ var LocalModel = function (array) {
 LocalModel.prototype = Object.create(Model.prototype);
 
 /**
- * Initializes the model.  Loads data from peristience into the passed array
+ * Initializes the model.  Loads data from scenarioDefinitions.js file into the passed array
  * @param array Location
  */
 LocalModel.prototype.init = function(array){
