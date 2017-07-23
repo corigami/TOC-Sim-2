@@ -8,14 +8,31 @@ describe("View Tests", function () {
 
     });
 
-    describe("Reset Display", function () {
-        it("should reset the menu to default",function(){
-            console.log(view);
-           view.resetDisplay();
-           expect(view.$headerText.text()).toEqual('ToC Simulator 2.0');
-           expect(view.myMenu.getMenuTitle()).toEqual("Choose a Scenario");
+    describe("Constructor Tests", function(){
+        it("should build a view when the controller is called",function(){
+        expect(controller.getView()).not.toBeNull();
+        expect
         });
 
     });
+
+    describe("Function Tests", function(){
+        it("resetDisplay() should reset the menu to default",function(){
+            view.resetDisplay();
+            expect(view.$headerText.text()).toEqual('ToC Simulator 2.0');
+            expect(view.myMenu.getMenuTitle()).toEqual("Choose a Scenario");
+        });
+
+        it("getMain() should return the element with the 'main' id", function(){
+           expect(view.getMain().attr('id')).toEqual("main");
+        });
+
+        it("getMain() should return the element with the 'main' id", function(){
+            expect(view.getMain().attr('id')).toEqual("main");
+        });
+
+    });
+
+
 
 });

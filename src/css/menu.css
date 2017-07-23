@@ -53,6 +53,7 @@ a:hover {
 .scenario-node-details{
     margin-left: 4px;
     text-align:center;
+    margin-bottom: 8px;
 }
 
 .node-details{
