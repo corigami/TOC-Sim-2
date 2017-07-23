@@ -35,6 +35,13 @@ describe("Menu Tests", function () {
         expect(self.view.myMenu.getMenuTitle()).toEqual(scenarios[0].getName() + ' Details');
     });
 
+    it("Control buttons should be visible if ready to run simulation",function (){
+        var scenarios = self.controller.getScenarios();
+        self.view.myMenu.buildScenarioDetailsMenu(scenarios[0]);
+        expect($('#ctrl-container').is(":visible")).toBeTruthy();
+
+    });
+
     it("buildCustomScenarioMenu should result in new menu being generated", function () {
         self.view.myMenu.buildCustomScenarioMenu();
         expect(self.view.myMenu.getMenuTitle()).not.toEqual("Choose a Scenario");

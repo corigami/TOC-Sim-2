@@ -104,6 +104,8 @@ Menu.prototype.buildScenarioDetailsMenu = function(scenario){
         nodeItem.append(nodeDetailContainer);
 
         this.$menuList.append(nodeItem);
+        $('#ctrl-container').fadeIn(1000);
+
     },this);
 
 };

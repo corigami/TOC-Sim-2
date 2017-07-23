@@ -11,9 +11,10 @@ describe("View Tests", function () {
     describe("Constructor Tests", function(){
         it("should build a view when the controller is called",function(){
         expect(controller.getView()).not.toBeNull();
-        expect
         });
-
+        it("Control buttons should be hidden if not ready to run simulation",function (){
+            expect($('#ctrl-container').is(":visible")).toBeFalsy();
+        });
     });
 
     describe("Function Tests", function(){

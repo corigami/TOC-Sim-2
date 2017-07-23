@@ -1,0 +1,38 @@
+/*
+Style sheet for the button controls in the application. Button styling based on
+W3CSchools simple CSS animate button.
+ */
+
+.ctrl-btn {
+    padding: 12px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+.ctrl-btn:hover {
+    background-color: #3e8e41
+}
+
+.ctrl-btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+#next-btn {
+    width: 100px;
+    height: 50px;
+}
+
+#ctrl-container{
+    position: fixed;
+    right: 100px;
+    bottom: 50px;
+}
