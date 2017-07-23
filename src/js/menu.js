@@ -78,12 +78,29 @@ Menu.prototype.buildScenarioDetailsMenu = function(scenario){
 
     //for each node create a menu item that shows its parameters.
     nodes.forEach(function(node){
-        var nodeItem = $('<li></li>');
-        nodeItem.attr("id","scenario-node-details" + i++);
-        nodeItem.attr("class","scenario-node-details");
+        var nodeItem,
+            nodeDetailContainer,
+            nodeTable;
 
-        var nodeDetailContainer = $('<div class="node-details">Node '+ node.idNum +'</div>');
-        nodeDetailContainer.append('<p> Name: ' + node.unitName + '</p>');
+        nodeItem = $('<li></li>');
+        nodeItem.attr("class","scenario-node-details");
+        nodeDetailContainer = $('<div></div>');
+        nodeTable = $('<table id="scenario-node-' + i +'-details" class="node-details">' +
+            ' Node '+ node.idNum +'</table>');
+
+        //Iterate through node properties and add to config table
+        //Don't need to display idNum to user.
+        Object.keys(node).forEach(function(key,index) {
+            var rowEl = $('<tr></tr>');
+            var keyEl = $('<td>' + key +': </td>');
+            if(key != "idNum") {
+                var valEl = $('<td><input type="text" id="node-' + node.idNum + '-val" value="' +
+                    node[key] + '"></td>');
+                rowEl.append(keyEl).append(valEl);
+                nodeTable.append(rowEl);
+            }
+        });
+        nodeDetailContainer.append(nodeTable);
         nodeItem.append(nodeDetailContainer);
 
         this.$menuList.append(nodeItem);
