@@ -43,12 +43,19 @@ View.prototype.getMain = function () {
 };
 
 /**
- * Gets the currently generated menu from the menu object and applies it to the view.
+ * Sets the currently generated menu from the menu object and applies it to the view.
  */
 View.prototype.setMenu = function () {
     this.$menu.replaceWith(this.myMenu.getMenu());
-
 };
+
+/**
+ * Gets the currently generated menu from the menu object and applies it to the view.
+ */
+View.prototype.getMenu = function () {
+    return this.myMenu;
+};
+
 
 /**
  * Sets the application controller so the view has a reference.

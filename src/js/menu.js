@@ -106,11 +106,10 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
         });
         nodeDetailContainer.append(nodeTable);
         nodeItem.append(nodeDetailContainer);
-        myView.showButtons();
         this.$menuList.append(nodeItem);
 
     }, this);
-
+    myView.showButtons();
 };
 
 /**
@@ -159,4 +158,20 @@ var toggleMenu = function () {
     var checkbox = $('#menuCheckbox');
     var status = checkbox.prop('checked');
     checkbox.prop('checked', !status);
+};
+
+/**
+ * Helper function to handle showing the menu.
+ */
+var showMenu = function () {
+    var checkbox = $('#menuCheckbox');
+    checkbox.prop('checked', true);
+};
+
+/**
+ * Helper function to handle showing the menu.
+ */
+var hideMenu = function () {
+    var checkbox = $('#menuCheckbox');
+    checkbox.prop('checked', false);
 };

@@ -3,15 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ToC Simulator 2.0</title>
+    <title>Theory Of Constraints Simulator v2</title>
+    <author>Corey Willinger</author>
+    <link rel="shortcut icon" type="image/png" href="img/link.png">
+    <link rel="stylesheet" href="lib/jasmine-2.6.4/jasmine.css">
     <link rel="stylesheet" href="../src/css/menu.css">
     <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="../src/css/controls.css">
     <script src="../src/js/lib/jquery-3.2.1.js"></script>
 </head>
 
 <body>
 <header id="header">
-    <h1 id="headertext">header placeholder</h1>
+    <h1 id="headertext">Theory of Constraints Simulator</h1>
 </header>
 <nav>
     <div id="menuToggle">
@@ -25,8 +29,12 @@
     </div>
 </nav>
 <main id="main" class="center">
-    Main content container
+    Choose a scenario by clicking on the menu button in the to the top-left.
 </main>
+<div id="ctrl-container" hidden>
+    <button id="next-btn" class="ctrl-btn">Run</button>
+</div>
+
 </body>
 
 <!-- include source files here... -->
@@ -34,12 +42,12 @@
 <script src="../src/js/view.js"></script>
 <script src="../src/js/model/scenarioDefinitions.js"></script>
 <script src="../src/js/model/models.js"></script>
+<script src="../src/js/model/node.js"></script>
 <script src="../src/js/scenario.js"></script>
 <script src="../src/js/controller.js"></script>
 <script>
     $(document).ready(function () {
         document.controller = new Controller(new View());
-        document.controller.getView().resetDisplay();
     });
 </script>
 </html>

@@ -1,3 +1,4 @@
+//TODO add logic for run button.
 /**
  * Definies the controller for the Simulator
  * @param view The view connected to the controller
@@ -21,7 +22,7 @@ Controller.prototype.init = function(){
     //Only have a local model at this point, so hard coding for now.
     //This can be extended to support pulling scenarios from a database
     this.model = new LocalModel(this.scenarios);
-
+    this.view.resetDisplay();
 };
 
 Controller.prototype.resetAll = function(){
@@ -48,8 +49,4 @@ Controller.prototype.getModel = function(){
 Controller.prototype.getModelName = function(){
     return this.model.getName();
 };
-/*
-$(document).ready(function () {
-    document.controller = new Controller(new View());
-});
-*/
+
