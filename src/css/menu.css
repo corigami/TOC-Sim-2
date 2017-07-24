@@ -11,25 +11,26 @@ a {
     color: #232323;
     transition: color 0.3s ease;
 }
+
 a:hover {
     color: tomato;
 }
 
-.scenario-menuItem{
+.scenario-menuItem {
     text-align: left;
     color: #EEE;
     background-color: #777;
     padding: 2px 0 2px 8px;
-    margin:0;
+    margin: 0;
     cursor: pointer;
 }
 
-.scenario-menuItem:hover{
+.scenario-menuItem:hover {
     background-color: #007069;
 }
 
-#menu-header{
-    margin-bottom:4px;
+#menu-header {
+    margin-bottom: 4px;
     color: #FFF;
     background-color: #111;
     text-align: center;
@@ -38,33 +39,29 @@ a:hover {
     box-shadow: 3px 3px 3px #333;
 
 }
-.scenario-title{
+
+.scenario-title {
     font-size: 1.1em;
     margin: 2px 0 2px 2px;
-    padding:2px;
+    padding: 2px;
 }
 
-.scenario-desc{
+.scenario-desc {
     font-size: 0.9em;
     margin: 2px 0 2px 15px;
-    padding:2px;
+    padding: 2px;
 }
 
-.scenario-node-details{
+.scenario-node-details {
     margin-left: 4px;
-    text-align:center;
+    text-align: center;
     margin-bottom: 8px;
 }
 
-.node-details{
-    text-align:left;
+.node-details {
+    text-align: left;
     margin: 4px;
 }
-
-
-
-
-
 
 #menuToggle {
     display: block;
@@ -75,7 +72,8 @@ a:hover {
     -webkit-user-select: none;
     user-select: none;
 }
-#menuToggle>input {
+
+#menuToggle > input {
     display: block;
     width: 40px;
     height: 32px;
@@ -104,9 +102,11 @@ a:hover {
     transform-origin: 4px 0;
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
 }
+
 #menuToggle span:first-child {
     transform-origin: 0 0;
 }
+
 #menuToggle span:nth-last-child(2) {
     transform-origin: 0 100%;
 }
@@ -156,7 +156,6 @@ a:hover {
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
     box-shadow: 5px 5px 5px #777;
 }
-
 
 /*
  * And let's fade it in from the left

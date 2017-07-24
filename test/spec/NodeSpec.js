@@ -7,7 +7,7 @@ describe("Node Tests", function () {
     });
 
     describe("Constructor Tests", function () {
-        it("should build a node object when passed appropriate data",function(){
+        it("should build a node object when passed appropriate data", function () {
             var data = {
                 idNumber: 1,
                 baseCapacity: 5,

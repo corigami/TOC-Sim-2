@@ -18,7 +18,7 @@ var Node = function (data) {
 /**
  * Initializes the object
  */
-Node.prototype.init = function(data){
+Node.prototype.init = function (data) {
     this.idNum = data.idNumber;
     this.baseCapacity = data.baseCapacity;
     this.initWIP = data.initWIP;

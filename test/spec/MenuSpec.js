@@ -35,7 +35,7 @@ describe("Menu Tests", function () {
         expect(self.view.myMenu.getMenuTitle()).toEqual(scenarios[0].getName() + ' Details');
     });
 
-    it("Control buttons should be visible if ready to run simulation",function (){
+    it("Control buttons should be visible if ready to run simulation", function () {
         var scenarios = self.controller.getScenarios();
         self.view.myMenu.buildScenarioDetailsMenu(scenarios[0]);
         expect($('#ctrl-container').is(":visible")).toBeTruthy();
@@ -48,7 +48,3 @@ describe("Menu Tests", function () {
         expect(self.view.myMenu.getMenuTitle()).toEqual("Input Custom Node Parameters");
     });
 });
-
-//TODO add test for onclick function.
-
-//TODO add test for loading scenario options once a scenario is picked});
