@@ -3,10 +3,10 @@
  * @constructor
  */
 var Scenario = function (data) {
-    this.name;
-    this.description;
-    this.simType;
-    this.nodes;
+    var name,
+        description,
+        simType,
+        nodes;
 
     this.init(data);
 };

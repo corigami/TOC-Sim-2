@@ -4,19 +4,20 @@
  * Defines the menu object
  * @constructor
  */
-var Menu = function(view){
+var Menu = function(_view){
         var menuTitle,
         $menuElement,
-        $menuList;
-        this.view = view;
+        $menuList,
+        view;
 
-    this.init(view);
+    this.init(_view);
 };
 
-Menu.prototype.init = function(){
+Menu.prototype.init = function(_view){
     this.$menuElement = $('#menu');
     this.menuTitle="";
     this.$menuList = null;
+    this.view = _view;
 };
 
 

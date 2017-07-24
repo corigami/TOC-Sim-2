@@ -1,10 +1,12 @@
 /* global $, Controller */
+
+//todo refactor to add a button visibility function
 var View = function () {
-        this.controller;
-        this.myMenu;
-        this.$main;
-        this.$menu;
-        this.$headerText;
+        var controller,
+        myMenu,
+        $main,
+        $menu,
+        $headerText;
 
     this.init();
 };
