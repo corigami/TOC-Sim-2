@@ -6,20 +6,25 @@ var View = function () {
         $main,
         $menu,
         $headerText,
-        $buttonContainer;
-
-    this.init();
+        $buttonContainer,
+        $runButton;
 };
 
 /**
  * Initializes the view to its initial state
  */
-View.prototype.init = function () {
+View.prototype.init = function (_controller) {
+    this.controller = _controller;
     this.myMenu = new Menu(this);
     this.$main = $('#main');
     this.$menu = $('#menu');
     this.$headerText = $('#headertext');
     this.$buttonContainer = $('#ctrl-container');
+    this.$runButton = this.$buttonContainer.find('#next-btn');
+    var temp_ctrl = this.controller;
+    this.$runButton.click(function(){
+        temp_ctrl.runSim();
+    });
 };
 
 /**
@@ -87,3 +92,4 @@ View.prototype.showButtons = function () {
 View.prototype.hideButtons = function () {
     this.$buttonContainer.hide();
 };
+

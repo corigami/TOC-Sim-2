@@ -5,9 +5,14 @@
  * @constructor
  */
 var Controller = function() {
-        this.view;
-        this.scenarios;
-        this.model;
+    var self = this;
+    var view,
+        scenarios,
+        model;
+
+        //scenario variables
+    var curScenario,
+        curDay;
     this.init();
 };
 
@@ -16,9 +21,9 @@ var Controller = function() {
  */
 Controller.prototype.init = function(){
     this.view = new View();
-    this.view.setController(this);
+    this.view.init(this);
     this.scenarios = [];
-
+    this.curDay = 0;
     //Only have a local model at this point, so hard coding for now.
     //This can be extended to support pulling scenarios from a database
     this.model = new LocalModel(this.scenarios);
@@ -48,5 +53,24 @@ Controller.prototype.getModel = function(){
 
 Controller.prototype.getModelName = function(){
     return this.model.getName();
+};
+
+Controller.prototype.getDay = function(){
+    return this.curDay;
+};
+
+Controller.prototype.runSim = function(numDays){
+    if(!numDays){
+        this.curDay++;
+    }else{
+        this.curDay += numDays;
+    }
+    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
+};
+
+Controller.prototype.loadScenario = function(scenario){
+    this.curScenario = scenario;
+    this.view.setHeader(this.curScenario.getName());
+    this.view.myMenu.buildScenarioDetailsMenu(this.curScenario);
 };
 

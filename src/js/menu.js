@@ -57,8 +57,7 @@ Menu.prototype.buildScenarioMenu = function (scenarios) {
         menuItem.append('<p class="scenario-desc">' + scenario.getDescription() + '</p>');
         menuItem.click(function () {
             toggleMenu();
-            myView.setHeader(scenario.getName());
-            menu.buildScenarioDetailsMenu(scenario);
+            myView.controller.loadScenario(scenario);
         });
         this.$menuList.append(menuItem);
     }, this);

@@ -1,9 +1,15 @@
 /* global document, expect, describe, beforeEach, it */
 describe("Menu Tests", function () {
     var self = this;
-    self.view = new View();
-    self.controller = new Controller(self.view);
-
+    self.controller = null;
+    self.view = null;
+    if(document.controller !== null && document.controller !== undefined){
+        self.controller = document.controller;
+    }else{
+        document.controller = new Controller()
+        self.controller = document.controller;
+    }
+    self.view = self.controller.getView();
     beforeEach(function () {
     });
 

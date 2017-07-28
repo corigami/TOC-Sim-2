@@ -2,10 +2,21 @@
 
 describe("Controller Tests", function () {
     var self = this;
+    self.controller = null;
+    self.view = null;
+    if(document.controller !== null && document.controller !== undefined){
+        self.controller = document.controller;
+    }else{
+        document.controller = new Controller()
+        self.controller = document.controller;
+    }
+    beforeEach(function () {
+
+    });
 
     describe("Constructor Tests", function () {
         it("should build a controller object", function () {
-            self.controller = new Controller();
+
             expect(self.controller).not.toBeNull();
             expect(self.controller.getScenarios()).not.toBeNull();
             expect(self.controller.getModel()).not.toBeNull();
@@ -33,7 +44,21 @@ describe("Controller Tests", function () {
             expect(numOfScenarios).toBeGreaterThan(0);
         });
 
+    });
 
+    describe("Simulation Tests", function(){
+
+       it("should advance the scenario a day when user clicks run", function(){
+           var scenario = self.controller.getScenarios()[0];
+           self.controller.loadScenario(scenario);
+           var currentDay = self.controller.getDay();
+           self.controller.runSim();
+           expect(self.controller.getDay()).toEqual(currentDay+1);
+       });
+
+       it("should update the display to show the current day of simulation", function(){
+
+       });
     });
 
 });
