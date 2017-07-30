@@ -1,4 +1,3 @@
-//TODO build node object out.
 /**
  * Defines a Production Data object that simply stores data.
  * @constructor
@@ -7,7 +6,6 @@ var ProdData = function () {
     var efficiency,
         missedOps,
         output,
-        outputInv,
         prodVal,
         wip,
         wipValue;
@@ -20,6 +18,7 @@ var ProdData = function () {
  * Initializes the object
  */
 ProdData.prototype.init = function () {
+    //init primitives
     this.efficiency = 0;
     this.missedOps = 0;
     this.output = 0;
@@ -27,4 +26,6 @@ ProdData.prototype.init = function () {
     this.prodVal = 0;
     this.wip = 0;
     this.wipValue = 0;
+
+
 };

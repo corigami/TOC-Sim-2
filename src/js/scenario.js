@@ -6,7 +6,8 @@ var Scenario = function (data) {
     var name,
         description,
         simType,
-        nodes;
+        nodes,
+        prodData;
 
     this.init(data);
 };
@@ -20,6 +21,7 @@ Scenario.prototype.init = function (data) {
     this.description = data.description;
     this.simType = data.simType;
     this.nodes = [];
+    this.prodData = [];
 
     //create an array of Nodes from the raw data.
     data.nodes.forEach(function (nodeData) {
