@@ -15,7 +15,7 @@ var Node = function (data) {
     var inputNodes,
         inventoryItems, //list of items required to produce work and quantity
         outputNodes,    //list of nodes that will receive output
-        prodData;       //data that stores simulation results
+        prodData,      //data that stores simulation results
         reqResources;  //list of items and quantity required for each item
     this.init(data);
 
@@ -58,4 +58,10 @@ Node.prototype.calcWIP = function(){
  * Calculates efficiency based on node capacity and how much it what it actually produced;
  */
 Node.prototype.calcEff = function(){
+};
+
+/**
+ * Calculates capacity based on node variance factors;
+ */
+Node.prototype.calcCap = function(){
 };
