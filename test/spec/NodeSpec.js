@@ -32,7 +32,6 @@ describe("Node Tests", function () {
 
     beforeEach(function () {
         node = new Node(data1);
-        node
     });
 
     describe("Constructor Tests", function () {
@@ -48,30 +47,78 @@ describe("Node Tests", function () {
     });
 
     describe("Functional Tests", function () {
-        describe("Capacity Tests", function () {
-            it("should be able to calculate Capacity", function () {
+        describe("Random Generator Test - not exact but will find grossly broken distributions", function () {
+            it("Should be able to generate a random value (uniform distribution)", function () {
+                var ranVal = node.genRandom(0, 10);
+                expect(ranVal).toBeGreaterThanOrEqual(0);
+                expect(ranVal).toBeGreaterThanOrEqual(0);
 
+                var arrayCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                var i;
+                for (i = 0; i < 1000; i++) {
+                    var value = node.genRandom(0, 10);
+                    arrayCount[value] = arrayCount[value] + 1;
+                }
+                var total = 0;
+                for (i = 0; i <= 10; i++) {
+                    total = total + (arrayCount[i] * i);
+                }
+                total = total / 1000;
+                //using 1000 runs should give a us an mean very close to the median
+                expect(total).toBeGreaterThanOrEqual(4.5);
+                expect(total).toBeLessThanOrEqual(5.5);
+            });
+
+            it("Should be able to generate a random value (normal distribution)", function () {
+                var ranVal = node.genRandom(0, 10);
+                expect(ranVal).toBeGreaterThanOrEqual(0);
+                expect(ranVal).toBeGreaterThanOrEqual(0);
+
+                var arrayCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                var i;
+                for (i = 0; i < 1000; i++) {
+                    var value = node.genRandom(0, 10, 2);
+                    arrayCount[value] = arrayCount[value] + 1;
+                }
+                var total = 0;
+                for (i = 0; i <= 10; i++) {
+                    total = total + (arrayCount[i] * i);
+                }
+                total = total / 1000;
+                //using 1000 runs should give a us an mean very close to the median
+                expect(total).toBeGreaterThanOrEqual(4.5);
+                expect(total).toBeLessThanOrEqual(5.5);
+                //our values close to the median should occur more frequently than min and max
+                expect(arrayCount[5]).toBeGreaterThan(arrayCount[0]);
+                expect(arrayCount[5]).toBeGreaterThan(arrayCount[10]);
             });
         });
-
-        describe("WIP Tests", function () {
-            it("should be able to calculate WIP", function () {
-
-            });
-        });
-
-        describe("Efficiency Tests", function () {
-            it("should be able to calculate Efficiency", function () {
-
-            });
-        });
-
-        describe("Simulation Tests", function () {
-            it("should be able to run a simulation production", function () {
-
-            });
-        });
-
     });
 
+
+    describe("Capacity Tests", function () {
+        it("should be able to calculate Capacity", function () {
+            var cap = node.calcCap();
+            expect(cap).toBeGreaterThanOrEqual(node.baseCapacity - (node.capRange / 2));
+            expect(cap).toBeLessThanOrEqual(node.baseCapacity + (node.capRange / 2));
+        });
+    });
+
+    describe("WIP Tests", function () {
+        it("should be able to calculate WIP on day 1 based on initial wip values", function () {
+
+        });
+    });
+
+    describe("Efficiency Tests", function () {
+        it("should be able to calculate Efficiency", function () {
+
+        });
+    });
+
+    describe("Simulation Tests", function () {
+        it("should be able to run a simulation production", function () {
+
+        });
+    });
 });

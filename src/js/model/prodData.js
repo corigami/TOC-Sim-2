@@ -3,7 +3,8 @@
  * @constructor
  */
 var ProdData = function () {
-    var efficiency,
+    var capacity,
+        efficiency,
         missedOps,
         output,
         prodVal,
@@ -19,6 +20,7 @@ var ProdData = function () {
  */
 ProdData.prototype.init = function () {
     //init primitives
+    this.capacity =0;
     this.efficiency = 0;
     this.missedOps = 0;
     this.output = 0;
