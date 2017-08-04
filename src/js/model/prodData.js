@@ -6,8 +6,8 @@ var ProdData = function () {
     var capacity,
         efficiency,
         missedOps,
-        output,
-        prodVal,
+        outputInv,
+        inputInv,
         wip,
         wipValue;
 
@@ -23,7 +23,7 @@ ProdData.prototype.init = function () {
     this.capacity =0;
     this.efficiency = 0;
     this.missedOps = 0;
-    this.output = 0;
+    this.inputInv = 0;
     this.outputInv = 0;
     this.prodVal = 0;
     this.wip = 0;

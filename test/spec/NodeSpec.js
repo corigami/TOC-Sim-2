@@ -3,12 +3,14 @@
 describe("Node Tests", function () {
     var node;
     var data1 = {
-        idNumber: 1,
         baseCapacity: 5,
-        initWIP: 4,
         capRange: 5,
-        varFactor: 2,
-        unitName: 'test item1'
+        idNumber: 1,
+        initWIP: 4,
+        prodvalue: 1,
+        required: 1,
+        unitName: 'test item1',
+        varFactor: 2
     };
 
     var data2 = {
@@ -16,7 +18,9 @@ describe("Node Tests", function () {
         baseCapacity: 5,
         initWIP: 4,
         capRange: 5,
+        prodvalue: 2,
         varFactor: 2,
+        required: 2,
         unitName: 'test item2'
     };
 
@@ -25,6 +29,8 @@ describe("Node Tests", function () {
         baseCapacity: 5,
         initWIP: 4,
         capRange: 5,
+        prodvalue: 3,
+        required: 3,
         varFactor: 2,
         unitName: 'test item3'
     };
@@ -35,15 +41,28 @@ describe("Node Tests", function () {
     });
 
     describe("Constructor Tests", function () {
-        it("should build a node object when passed appropriate data", function () {
+        it("should build a Node object when passed appropriate data", function () {
             expect(node.idNum).toEqual(1);
             expect(node.baseCapacity).toEqual(5);
             expect(node.initWIP).toEqual(4);
             expect(node.capRange).toEqual(5);
+            expect(node.prodValue).toEqual(1);
             expect(node.varFactor).toEqual(2);
             expect(node.unitName).toEqual('test item1');
+            expect(node.required).toEqual(1);
         });
 
+        it("should build a NetworkNode object when passed appropriate data", function () {
+            var networkNode = new NetworkNode(data1);
+            expect(networkNode.idNum).toEqual(1);
+            expect(networkNode.baseCapacity).toEqual(5);
+            expect(networkNode.initWIP).toEqual(4);
+            expect(networkNode.capRange).toEqual(5);
+            expect(node.prodValue).toEqual(1);
+            expect(networkNode.varFactor).toEqual(2);
+            expect(networkNode.unitName).toEqual('test item1');
+            expect(networkNode.required).toEqual(null);
+        });
     });
 
     describe("Functional Tests", function () {
