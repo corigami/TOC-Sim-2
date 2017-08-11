@@ -6,10 +6,11 @@ var ProdData = function () {
     var capacity,
         efficiency,
         missedOps,
-        outputInv,
+        output,
         inputInv,
-        wip,
-        wipValue;
+        invValue,
+        outValue,
+        wip;
 
 
     this.init();
@@ -24,10 +25,21 @@ ProdData.prototype.init = function () {
     this.efficiency = 0;
     this.missedOps = 0;
     this.inputInv = 0;
-    this.outputInv = 0;
+    this.output = 0;
     this.prodVal = 0;
     this.wip = 0;
     this.wipValue = 0;
 
 
 };
+
+ProdData.prototype.print = function(){
+
+    for (var property in this) {
+        if (this.hasOwnProperty(property)) {
+            console.log(property+ ": " + this[property]);
+        }
+    }
+
+
+}

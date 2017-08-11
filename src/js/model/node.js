@@ -5,14 +5,16 @@
  */
 var Node = function (data) {
     var self = this;
-    var idNum,
-        baseCapacity,
-        initWIP,
-        capRange,
-        prodValue,
-        required,
-        varFactor,
-        unitName;
+    var idNum,          //node number
+        baseCapacity,   //baseline nominal capacity
+        capRange,       //how much our production can fluctuate (in units)
+        initWIP,        //the initial number of items we have inventory to produce
+        inputNode,      //the node we get our input from
+        outputNode,     //the node we send our output to
+        prodValue,      //how much is each output item worth
+        required,       //the number of inventory items required to produce 1 output
+        varFactor,      //adjusts the distribution of randomness (think number of dice rolled)
+        unitName;       //What does this node produce.
 
     //arrays
     var prodData;     //data that stores simulation results
@@ -27,6 +29,8 @@ Node.prototype.init = function (data) {
     this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 5: data.baseCapacity;     //default amount of what the node can produce
     this.capRange = (typeof data.capRange === 'undefined') ? 5: data.capRange;     //initial amount of inventory initially in the queue
     this.initWIP = (typeof data.initWIP === 'undefined') ? 0: data.initWIP;
+    this.inputNode = null;
+    this.outputNode = null;
     this.prodValue = (typeof data.prodValue === 'undefined') ? 1: data.prodValue;
     this.required = (typeof data.required === 'undefined') ? 1: data.required;
     this.unitName = (typeof data.unitName === 'undefined') ? "Default" : data.unitName;
@@ -35,43 +39,56 @@ Node.prototype.init = function (data) {
     self.prodData = [];          //array that stores data for each day of the simulation
     self.prodData.push(new ProdData());
 
-    //init pre-production data
+    //init pre-production (day 0)data
     var production = self.prodData[0];
     production.wip = (typeof data.initWIP === 'undefined') ? 0: data.initWIP;
     production.inputInv = production.wip * this.required;
 };
+
 /**
  * Simulates producing units based on the inventory it currently has.
  * It then stores its records its production data and transfers its output to nodes in its
  * outputNodes list.
  */
 Node.prototype.runSim = function (day) {
-    //initialize starting values for day
-    var production = self.prodData[day];
-    var tomorrowProd = new ProdData();
-    this.prodData[day+1] = tomorrowProd;
-    production.capacity = this.calcCap();
 
-    //todo unfinished
-    //calculate output
-    //now we need to "do work"
-    //if the new wip for the day is greater than today's capacity,  our output is equal to our capacity,
-    //and we have 0 missed ops.  The starting WIP for tomorrow will be what's left over.
-    if (production.wip >= production.capacity * this.required) {
-        production.outputInv = production.capacity;
-        production.missedOp = 0;
-        production.prodValue = production.outputInv * this.prodValue;
+    var production = self.prodData[day];     //initialize starting values for day
+    this.prodData[day+1] = new ProdData();   //initialize tomorrows production data
+    production.capacity = this.calcCap();    //update the day's capacity and Works In Progress
+    this.calcWIP(day);
 
+    //calculate the value of our current inventory
+    if(this.inputNode != null){//if we're not the first node
+        production.invValue = production.inputInv * this.inputNode.prodValue
+    }else{
+        production.invValue = 0; //initial input has no value;
+    }
+
+    /*
+    * Calculate output - now we need to "do work"...
+    * if the wip for the day is greater than today's capacity , our output is equal to our capacity,
+    * and we have 0 missed ops.
+    * The starting inventory for tomorrow will be what's left over. And our missed ops will be equal
+    * to 0 if we have more wip than capacity or capacity - wip if we don't.
+    */
+    if (production.wip >= production.capacity) {
+        production.missedOps = 0;
+        production.output = production.capacity;
         //otherwise, our output is limited by our wip for the day, and we have our missed ops is equal to
         //today's capacity minus our WIP.
     } else {
-
-        this.outputInv[day] = this.wip[day];
-        this.missedOp[day] = todayCapacity - startingWip;
+        production.output = production.wip;
+        production.missedOps = production.capacity - production.wip;
         this.wip[day + 1] = 0;
     }
+    //carry over leftover inventory to tomorrows inputInventory
+    this.prodData[day+1] = production.inputInv - production.output * this.required;
 
+    //calculate the value of today's work
+    production.outValue = production.output * this.prodValue;
 
+    //calculate efficiency
+    this.calcEff(day);
 };
 
 /**
@@ -79,18 +96,27 @@ Node.prototype.runSim = function (day) {
  * Assumes a prodData item as already been created for storing the days values;
  */0
 Node.prototype.calcWIP = function (day) {
-    //Not Finished!!!!
-    //todo create inventory items based on initWIP values, for linear simulations
-    //todo create inventory items based on initWIP values for network simulations
+    var production = this.prodData[day];
     //if we're station 1, our WIP is our capacity
-    //if it is the first day, all nodes use the init WIP
+    if(production != undefined){
+        if(this.idNum == 1){
+            production.wip = production.capacity;
+        }else if(day != 0){
+            //if it is the first day, all nodes use the init WIP which has already been initialized
+            //otherwise its our current inventory divided by required amount.
+            production.wip = production.inputInv / this.required;
+        }
+    }else{
+        console.log("Error - prod data has not been initialized");
+    }
 };
 
 /**
  * Calculates efficiency based on node capacity and how much it what it actually produced;
  */
-Node.prototype.calcEff = function () {
-
+Node.prototype.calcEff = function (day) {
+    var production = this.prodData[day];
+    production.efficiency = production.output / production.capacity;
 };
 
 /**
@@ -153,7 +179,6 @@ NetworkNode.prototype.init = function(data) {
     this.inventoryItems = new Map();    //array used to store simulated stock.
     this.outputNodes = [];       //nodes that receive our output.
     this.reqResources = new Map();      //array to store items and amounts required.
-    console.log(this);
 };
 
 /**

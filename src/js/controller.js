@@ -1,4 +1,3 @@
-//TODO add logic for run button.
 /**
  * Definies the controller for the Simulator
  * @param view The view connected to the controller

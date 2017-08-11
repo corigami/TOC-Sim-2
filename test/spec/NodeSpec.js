@@ -38,14 +38,10 @@ describe("Node Tests", function () {
 
     beforeEach(function () {
         node = new Node(data1);
-        console.log("before each");
     });
 
     describe("Constructor Tests", function () {
-        console.log("here");
         it("should build a Node object when passed appropriate data", function () {
-            console.log("here2");
-            console.log(node);
             expect(node.idNum).toEqual(1);
             expect(node.baseCapacity).toEqual(5);
             expect(node.initWIP).toEqual(4);
@@ -126,19 +122,20 @@ describe("Node Tests", function () {
             expect(cap).toBeLessThanOrEqual(node.baseCapacity + (node.capRange / 2));
         });
     });
-
+    //todo complete WIP tests
     describe("WIP Tests", function () {
         it("should be able to calculate WIP on day 1 based on initial wip values", function () {
 
         });
     });
-
+    //todo complete Efficiency tests
     describe("Efficiency Tests", function () {
         it("should be able to calculate Efficiency", function () {
 
         });
     });
 
+    //todo complete Simulation tests
     describe("Simulation Tests", function () {
         it("should be able to run a simulation production", function () {
 

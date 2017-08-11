@@ -39,6 +39,22 @@ Scenario.prototype.getNodes = function () {
     return this.nodes;
 };
 
+Scenario.prototype.connectNodes = function(){
+    if(this.simType = "Normal"){
+        //create an double linked list of our nodes (
+        for(var i = 0; i < this.nodes.length;i++){
+            if( i != 0){
+                this.nodes[i].inputNode = this.nodes[i-1];
+            }
+            if(i != this.nodes.length-1){
+                this.nodes[i].outputNode = this.nodes[i+1];
+            }
+
+        }
+    }
+    //todo add logic for SimType = "Network"
+}
+
 /**
  *
  * @returns {String} Name of Scenario
