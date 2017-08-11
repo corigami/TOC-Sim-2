@@ -26,8 +26,9 @@ Node.prototype.init = function (data) {
     this.idNum = data.idNumber;
     this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 5: data.baseCapacity;     //default amount of what the node can produce
     this.capRange = (typeof data.capRange === 'undefined') ? 5: data.capRange;     //initial amount of inventory initially in the queue
+    this.initWIP = (typeof data.initWIP === 'undefined') ? 0: data.initWIP;
+    this.prodValue = (typeof data.prodValue === 'undefined') ? 1: data.prodValue;
     this.required = (typeof data.required === 'undefined') ? 1: data.required;
-    this.prodValue = (typeof data.required === 'undefined') ? 1: data.prodValue;
     this.unitName = (typeof data.unitName === 'undefined') ? "Default" : data.unitName;
     this.varFactor =(typeof data.varFactor === 'undefined') ? 1: data.varFactor;                //spread of how much the capacity range can fluctuate
     //init arrays;

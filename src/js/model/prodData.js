@@ -12,7 +12,7 @@ var ProdData = function () {
         wipValue;
 
 
-    this.init(data);
+    this.init();
 };
 
 /**

@@ -7,7 +7,7 @@ describe("Node Tests", function () {
         capRange: 5,
         idNumber: 1,
         initWIP: 4,
-        prodvalue: 1,
+        prodValue: 1,
         required: 1,
         unitName: 'test item1',
         varFactor: 2
@@ -18,7 +18,7 @@ describe("Node Tests", function () {
         baseCapacity: 5,
         initWIP: 4,
         capRange: 5,
-        prodvalue: 2,
+        prodValue: 2,
         varFactor: 2,
         required: 2,
         unitName: 'test item2'
@@ -29,7 +29,7 @@ describe("Node Tests", function () {
         baseCapacity: 5,
         initWIP: 4,
         capRange: 5,
-        prodvalue: 3,
+        prodValue: 3,
         required: 3,
         varFactor: 2,
         unitName: 'test item3'
@@ -38,10 +38,14 @@ describe("Node Tests", function () {
 
     beforeEach(function () {
         node = new Node(data1);
+        console.log("before each");
     });
 
     describe("Constructor Tests", function () {
+        console.log("here");
         it("should build a Node object when passed appropriate data", function () {
+            console.log("here2");
+            console.log(node);
             expect(node.idNum).toEqual(1);
             expect(node.baseCapacity).toEqual(5);
             expect(node.initWIP).toEqual(4);
