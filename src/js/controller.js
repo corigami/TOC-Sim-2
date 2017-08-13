@@ -59,12 +59,26 @@ Controller.prototype.getDay = function(){
 };
 
 Controller.prototype.runSim = function(numDays){
-    if(!numDays){
-        this.curDay++;
-    }else{
-        this.curDay += numDays;
-    }
-    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
+    var daysToRun = (typeof numDays === 'undefined') ? 1: numdays;
+    for (var i=0; i < daysToRun; i++){
+        console.log("numDays:" + numDays);
+        console.log("Day: " + this.curDay);
+
+        //run production for each of the nodes
+        this.curScenario.nodes.forEach(function(element) {
+            console.log("Node: " + element.idNum);
+            element.runSim(this.curDay);
+           // element.prodData[this.curDay].print();
+        }, this);
+
+        //transfer the output of each node to the next
+        this.curScenario.nodes.forEach(function(element) {
+            element.transferOutput(this.curDay);
+        }, this);
+
+            this.curDay++;
+        }
+        this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
 };
 
 Controller.prototype.loadScenario = function(scenario){

@@ -36,11 +36,11 @@ Node.prototype.init = function (data) {
     this.unitName = (typeof data.unitName === 'undefined') ? "Default" : data.unitName;
     this.varFactor =(typeof data.varFactor === 'undefined') ? 1: data.varFactor;                //spread of how much the capacity range can fluctuate
     //init arrays;
-    self.prodData = [];          //array that stores data for each day of the simulation
-    self.prodData.push(new ProdData());
+    this.prodData = [];          //array that stores data for each day of the simulation
+    this.prodData.push(new ProdData());
 
     //init pre-production (day 0)data
-    var production = self.prodData[0];
+    var production = this.prodData[0];
     production.wip = (typeof data.initWIP === 'undefined') ? 0: data.initWIP;
     production.inputInv = production.wip * this.required;
 };
@@ -52,8 +52,8 @@ Node.prototype.init = function (data) {
  */
 Node.prototype.runSim = function (day) {
 
-    var production = self.prodData[day];     //initialize starting values for day
-    this.prodData[day+1] = new ProdData();   //initialize tomorrows production data
+    var production = this.prodData[day];     //initialize starting values for day
+    this.prodData[day+1] =  new ProdData();  //initialize tomorrows production data
     production.capacity = this.calcCap();    //update the day's capacity and Works In Progress
     this.calcWIP(day);
 
@@ -69,7 +69,7 @@ Node.prototype.runSim = function (day) {
     * if the wip for the day is greater than today's capacity , our output is equal to our capacity,
     * and we have 0 missed ops.
     * The starting inventory for tomorrow will be what's left over. And our missed ops will be equal
-    * to 0 if we have more wip than capacity or capacity - wip if we don't.
+    * to 0 if we have more wip than capacity or capacity - wip if we don't
     */
     if (production.wip >= production.capacity) {
         production.missedOps = 0;
@@ -79,17 +79,30 @@ Node.prototype.runSim = function (day) {
     } else {
         production.output = production.wip;
         production.missedOps = production.capacity - production.wip;
-        this.wip[day + 1] = 0;
+        this.prodData[day+1].wip = 0;
     }
-    //carry over leftover inventory to tomorrows inputInventory
-    this.prodData[day+1] = production.inputInv - production.output * this.required;
-
+    //carry over leftover inventory to tomorrows inputInventory (don't need to do for first node)
+    if(this.idNum != 1){
+    this.prodData[day+1].inputInv = production.inputInv - production.output * this.required;
+    }
     //calculate the value of today's work
     production.outValue = production.output * this.prodValue;
 
     //calculate efficiency
     this.calcEff(day);
+    production.print();
 };
+
+/**
+ * Transfers output of node to input of next node.
+ * Assumes production has been run for the day for all nodes.
+ */
+Node.prototype.transferOutput = function(day){
+    if(this.outputNode != null){
+       this.outputNode.prodData[day+1].inputInv +=  this.prodData[day].output;
+    }
+
+}
 
 /**
  * Calculates how many items it can produce based on required resources and current inventory

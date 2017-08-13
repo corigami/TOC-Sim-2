@@ -29,6 +29,8 @@ Scenario.prototype.init = function (data) {
         this.nodes.push(node);
     }, this);
 
+    this.connectNodes();
+
 };
 
 /**

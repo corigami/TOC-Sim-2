@@ -24,7 +24,7 @@ describe("Node Tests", function () {
         unitName: 'test item2'
     };
 
-    var data2 = {
+    var data3 = {
         idNumber: 3,
         baseCapacity: 5,
         initWIP: 4,
