@@ -93,3 +93,8 @@ View.prototype.hideButtons = function () {
     this.$buttonContainer.hide();
 };
 
+//todo add various visual representations of data
+
+//todo add function to chart data after a simulation is run.
+
+//todo add function to show mapping of data
