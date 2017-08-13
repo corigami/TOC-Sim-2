@@ -35,7 +35,6 @@ describe("Node Tests", function () {
         unitName: 'test item3'
     };
 
-
     beforeEach(function () {
         node = new Node(data1);
     });
@@ -114,7 +113,6 @@ describe("Node Tests", function () {
         });
     });
 
-
     describe("Capacity Tests", function () {
         it("should be able to calculate Capacity", function () {
             var cap = node.calcCap();
@@ -122,7 +120,7 @@ describe("Node Tests", function () {
             expect(cap).toBeLessThanOrEqual(node.baseCapacity + (node.capRange / 2));
         });
     });
-    //todo complete WIP tests
+
     describe("WIP Tests", function () {
         describe("First node", function () {
             it("should be able to calculate WIP for node 1 based on capacity values", function () {
@@ -150,8 +148,8 @@ describe("Node Tests", function () {
                 expect(day1Data.wip).toEqual(2); //data2 requires 2 inv items
             });
         });
-
     });
+    
     describe("Efficiency Tests", function () {
         it("should be able to calculate Efficiency", function () {
             production = node.prodData[0];
@@ -182,7 +180,7 @@ describe("Node Tests", function () {
             });
         });
 
-        describe("Other Nodes", function(){
+        describe("Other Nodes", function () {
             it("should be able to run a simulation production", function () {
                 node2 = new Node(data2);
                 node2.inputNode = node;
@@ -190,9 +188,9 @@ describe("Node Tests", function () {
                 production = node2.prodData[0];
                 var cap = production.capacity;
                 var wip = production.wip;
-                if(cap <= wip){
+                if (cap <= wip) {
                     expect(production.output).toEqual(cap);
-                }else{
+                } else {
                     expect(production.output).toEqual(wip);
                 }
                 expect(production.invValue).toEqual(node2.inputNode.prodValue * production.inputInv);

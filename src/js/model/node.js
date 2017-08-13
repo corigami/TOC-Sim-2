@@ -1,6 +1,7 @@
-//TODO extend Node object to NetworkNode to separate functionality
+
 /**
  * Defines a node object (station)
+ * @param data data to initialize the node with.
  * @constructor
  */
 var Node = function (data) {
@@ -23,6 +24,7 @@ var Node = function (data) {
 
 /**
  * Initializes the object
+ * @param data data to initialize the node with.
  */
 Node.prototype.init = function (data) {
     this.idNum = data.idNumber;
@@ -49,6 +51,7 @@ Node.prototype.init = function (data) {
  * Simulates producing units based on the inventory it currently has.
  * It then stores its records its production data and transfers its output to nodes in its
  * outputNodes list.
+ * @param day The day to calculate for
  */
 Node.prototype.runSim = function (day) {
 
@@ -90,12 +93,12 @@ Node.prototype.runSim = function (day) {
 
     //calculate efficiency
     this.calcEff(day);
-    // production.print();
 };
 
 /**
  * Transfers output of node to input of next node.
  * Assumes production has been run for the day for all nodes.
+ * @param day The day to calculate for
  */
 Node.prototype.transferOutput = function (day) {
     if (this.outputNode != null) {
@@ -107,6 +110,7 @@ Node.prototype.transferOutput = function (day) {
 /**
  * Calculates how many items it can produce based on required resources and current inventory
  * Assumes a prodData item as already been created for storing the days values;
+ * @param day The day to calculate for
  */
 Node.prototype.calcWIP = function (day) {
     var production = this.prodData[day];
@@ -126,6 +130,7 @@ Node.prototype.calcWIP = function (day) {
 
 /**
  * Calculates efficiency based on node capacity and how much it what it actually produced;
+ * @param day The day to calculate for
  */
 Node.prototype.calcEff = function (day) {
     var production = this.prodData[day];
@@ -163,11 +168,14 @@ Node.prototype.genRandom = function (min, max, varFact) {
 };
 
 
+//TODO extend Node object to NetworkNode to separate functionality
 /*
 ********************************************************************************
 Network node declaration
+This section is not complete and is not currently implemented.
 *********************************************************************************
  */
+
 /**
  * Extends the node for network connections;
  * @constructor

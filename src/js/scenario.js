@@ -41,15 +41,18 @@ Scenario.prototype.getNodes = function () {
     return this.nodes;
 };
 
-Scenario.prototype.connectNodes = function(){
-    if(this.simType = "Normal"){
-        //create an double linked list of our nodes (
-        for(var i = 0; i < this.nodes.length;i++){
-            if( i != 0){
-                this.nodes[i].inputNode = this.nodes[i-1];
+
+/**
+ * Connects each node to each other
+ */
+Scenario.prototype.connectNodes = function () {
+    if (this.simType = "Normal") {
+        for (var i = 0; i < this.nodes.length; i++) {
+            if (i != 0) {
+                this.nodes[i].inputNode = this.nodes[i - 1];
             }
-            if(i != this.nodes.length-1){
-                this.nodes[i].outputNode = this.nodes[i+1];
+            if (i != this.nodes.length - 1) {
+                this.nodes[i].outputNode = this.nodes[i + 1];
             }
 
         }
@@ -58,7 +61,7 @@ Scenario.prototype.connectNodes = function(){
 }
 
 /**
- *
+ * Returns the name of the Scenario
  * @returns {String} Name of Scenario
  */
 Scenario.prototype.getName = function () {
