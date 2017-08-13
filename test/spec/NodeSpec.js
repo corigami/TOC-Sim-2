@@ -124,21 +124,81 @@ describe("Node Tests", function () {
     });
     //todo complete WIP tests
     describe("WIP Tests", function () {
-        it("should be able to calculate WIP on day 1 based on initial wip values", function () {
-
+        describe("First node", function () {
+            it("should be able to calculate WIP for node 1 based on capacity values", function () {
+                production = node.prodData[0];
+                production.capacity = 4; //hard code to avoid random values
+                node.calcWIP(0);
+                expect(production.wip).toEqual(4);
+            });
         });
+
+        describe("Other Nodes", function () {
+            it("should be able to calulate WIP for all other nodes on day 0 based on initial WIP setting", function () {
+                node = new Node(data2);
+                production = node.prodData[0];
+                node.calcWIP(0);
+                expect(production.wip).toEqual(data2.initWIP);
+            });
+
+            it("should be able to calc WIP for all other nodes on any day but day zero", function () {
+                node = new Node(data2);
+                day1Data = new ProdData();
+                node.prodData[1] = day1Data;
+                day1Data.inputInv = 4;
+                node.calcWIP(1);
+                expect(day1Data.wip).toEqual(2); //data2 requires 2 inv items
+            });
+        });
+
     });
-    //todo complete Efficiency tests
     describe("Efficiency Tests", function () {
         it("should be able to calculate Efficiency", function () {
-
+            production = node.prodData[0];
+            production.output = 2; //hard code to skip simuluation
+            production.capacity = 4
+            node.calcEff(0);
+            expect(production.efficiency).toEqual(.5);
+            production.output = 4; //hard code to skip simuluation
+            production.capacity = 4
+            node.calcEff(0);
+            expect(production.efficiency).toEqual(1);
+            production.output = 0; //hard code to skip simuluation
+            production.capacity = 4
+            node.calcEff(0);
+            expect(production.efficiency).toEqual(0);
         });
     });
 
-    //todo complete Simulation tests
     describe("Simulation Tests", function () {
-        it("should be able to run a simulation production", function () {
+        describe("First node", function () {
+            it("should be able to run a simulation production", function () {
+                node.runSim(0);
+                production = node.prodData[0];
+                expect(production.output).toEqual(production.capacity);
+                expect(production.invValue).toEqual(0);
+                var value = production.capacity * node.prodValue;
+                expect(production.outValue).toEqual(value);
+            });
+        });
 
+        describe("Other Nodes", function(){
+            it("should be able to run a simulation production", function () {
+                node2 = new Node(data2);
+                node2.inputNode = node;
+                node2.runSim(0);
+                production = node2.prodData[0];
+                var cap = production.capacity;
+                var wip = production.wip;
+                if(cap <= wip){
+                    expect(production.output).toEqual(cap);
+                }else{
+                    expect(production.output).toEqual(wip);
+                }
+                expect(production.invValue).toEqual(node2.inputNode.prodValue * production.inputInv);
+                var value = production.output * node2.prodValue;
+                expect(production.outValue).toEqual(value);
+            });
         });
     });
 });

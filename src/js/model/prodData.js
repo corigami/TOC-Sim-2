@@ -21,14 +21,14 @@ var ProdData = function () {
  */
 ProdData.prototype.init = function () {
     //init primitives
-    this.capacity =0;
-    this.efficiency = 0;
-    this.missedOps = 0;
-    this.inputInv = 0;
-    this.output = 0;
-    this.prodVal = 0;
-    this.wip = 0;
-    this.wipValue = 0;
+    this.capacity =0;      //capacity for the day 
+    this.efficiency = 0;   //efficiency for the day
+    this.missedOps = 0;    //how much wasn't produced due to low WIP
+    this.inputInv = 0;     //starting stock for the day
+    this.output = 0;       //how much was produced
+    this.outValue = 0;     //what was the total value of the output
+    this.wip = 0;          //how many things can we make based on inventory
+    this.invValue = 0;     //what is the value of our starting stock
 
 
 };

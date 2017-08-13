@@ -61,12 +61,12 @@ Controller.prototype.getDay = function(){
 Controller.prototype.runSim = function(numDays){
     var daysToRun = (typeof numDays === 'undefined') ? 1: numdays;
     for (var i=0; i < daysToRun; i++){
-        console.log("numDays:" + numDays);
-        console.log("Day: " + this.curDay);
+     //   console.log("numDays:" + numDays);
+       // console.log("Day: " + this.curDay);
 
         //run production for each of the nodes
         this.curScenario.nodes.forEach(function(element) {
-            console.log("Node: " + element.idNum);
+      //      console.log("Node: " + element.idNum);
             element.runSim(this.curDay);
            // element.prodData[this.curDay].print();
         }, this);
