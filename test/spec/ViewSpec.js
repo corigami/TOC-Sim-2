@@ -7,9 +7,9 @@ describe("View Tests", function () {
     var self = this;
     self.controller = null;
     self.view = null;
-    if(document.controller !== null && document.controller !== undefined){
+    if (document.controller !== null && document.controller !== undefined) {
         self.controller = document.controller;
-    }else{
+    } else {
         document.controller = new Controller()
         self.controller = document.controller;
     }
@@ -18,9 +18,9 @@ describe("View Tests", function () {
 
     });
 
-    describe("Constructor Tests", function(){
-        it("should build a view when the controller is called",function(){
-        expect(self.controller.getView()).not.toBeNull();
+    describe("Constructor Tests", function () {
+        it("should build a view when the controller is called", function () {
+            expect(self.controller.getView()).not.toBeNull();
         });
 
         /*
@@ -30,15 +30,25 @@ describe("View Tests", function () {
         */
     });
 
-    describe("Function Tests", function(){
-        it("resetDisplay() should reset the menu to default",function(){
+    describe("Function Tests", function () {
+        it("resetDisplay() should reset the menu to default", function () {
             self.view.resetDisplay();
             expect(self.view.$headerText.text()).toEqual('ToC Simulator 2.0');
             expect(self.view.myMenu.getMenuTitle()).toEqual("Choose a Scenario");
         });
 
-        it("getMain() should return the element with the 'main' id", function(){
-           expect(self.view.getMain().attr('id')).toEqual("main");
+        it("getMain() should return the element with the 'main' id", function () {
+            expect(self.view.getMain().attr('id')).toEqual("main");
+        });
+
+        it("createChartArea() should create a canvas element and return its 2d context", function () {
+            var $main = self.view.getMain();
+            var ctx = self.view.createChartArea($main, "chart");
+            expect(ctx).not.toBeNull;
+            var testChart = $('#chart');
+            expect(testChart).not.toBeNull;
+            expect(testChart.attr('id')).toEqual("chart");
+            self.view.drawChart(ctx);
         });
 
     });
