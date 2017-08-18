@@ -31,7 +31,7 @@ describe("Controller Tests", function () {
         });
 
         it("View should reset main content", function(){
-            expect(self.controller.getView().getMain().text()).toBe("The data has been reset");
+            expect(self.controller.getView().getMain().text()).toBe("");
         });
 
         it("Should load the Local Model by default", function(){
@@ -49,6 +49,7 @@ describe("Controller Tests", function () {
     describe("Simulation Tests", function(){
 
        it("should advance the scenario a day when user clicks run", function(){
+           self.controller.resetAll();
            var scenario = self.controller.getScenarios()[0];
            self.controller.loadScenario(scenario);
            var currentDay = self.controller.getDay();

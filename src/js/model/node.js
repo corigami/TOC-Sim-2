@@ -19,6 +19,7 @@ var Node = function (data) {
 
     //arrays
     var prodData; //data that stores simulation results
+    
     this.init(data);
 };
 

@@ -59,6 +59,12 @@ Controller.prototype.getDay = function () {
 };
 
 Controller.prototype.runSim = function (numDays) {
+    console.log("curday: " + this.curDay);
+    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
+    //if its the first day, we need to create the graphs
+    if(this.curDay==0){
+        this.view.drawChart(this.view.chartContexts[0]);
+    }
     var daysToRun = (typeof numDays === 'undefined') ? 1 : numdays;
     for (var i = 0; i < daysToRun; i++) {
         //run production for each of the nodes
@@ -66,13 +72,41 @@ Controller.prototype.runSim = function (numDays) {
             element.runSim(this.curDay);
         }, this);
 
+        //update scenario data
+        this.updateScenarioData();
+
+        //update chart
+        this.view.charts[0].updateOutput(this.curScenario.prodData[this.curDay].output);
+
         //transfer the output of each node to the next
         this.curScenario.nodes.forEach(function (element) {
             element.transferOutput(this.curDay);
         }, this);
+        this.curScenario.days.push(this.curDay);
         this.curDay++;
+        
     }
-    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
+
+};
+
+Controller.prototype.updateScenarioData = function(){
+    //we'll use the ProdData class to store information for the scenario
+    var data = new ProdData();
+    //output for the scenario is the output of the last node.
+    data.output = this.curScenario.nodes[this.curScenario.nodes.length-1].prodData[this.curDay].output;
+
+    //efficency, wip, and missed ops are totals of all nodes
+    var eff = data.effciency;
+    var wip = data.wip;
+    var missedOps = data.missedOps;
+    this.curScenario.nodes.forEach(function (node) {
+        production = node.prodData[this.curDay];
+        missedOps += production.missedOps;
+        wip += production.wip;
+        eff += production.effciency;
+    }, this);
+    eff = eff / this.curScenario.nodes.length;
+    this.curScenario.prodData.push(data);
 };
 
 Controller.prototype.loadScenario = function (scenario) {

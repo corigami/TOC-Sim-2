@@ -7,7 +7,8 @@ var Scenario = function (data) {
         description,
         simType,
         nodes,
-        prodData;
+        prodData,
+        days;
 
     this.init(data);
 };
@@ -22,6 +23,7 @@ Scenario.prototype.init = function (data) {
     this.simType = data.simType;
     this.nodes = [];
     this.prodData = [];
+    this.days = [];
 
     //create an array of Nodes from the raw data.
     data.nodes.forEach(function (nodeData) {
@@ -82,4 +84,13 @@ Scenario.prototype.getSimType = function () {
  */
 Scenario.prototype.getDescription = function () {
     return this.description;
+}
+
+Scenario.prototype.updateProdData = function(production, day){
+    if(typeof day === 'undefined'){
+        this.prodData.push(production);
+    }else{
+        this.prodData[day] = production;
+    }
+
 }
