@@ -35,6 +35,10 @@ Scenario.prototype.init = function (data) {
 
 };
 
+Scenario.prototype.reset = function(){
+    this.days = [];
+};
+
 /**
  * returns our array of nodes;
  * @returns {Array} of Nodes

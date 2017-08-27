@@ -48,11 +48,8 @@ describe("View Tests", function () {
             var testChart = $('#chart');
             expect(testChart).not.toBeNull;
             expect(testChart.attr('id')).toEqual("chart");
-            self.view.drawChart(ctx);
+          //  self.view.drawChart(ctx);
         });
 
     });
-
-
-
 });

@@ -30,6 +30,9 @@ Controller.prototype.init = function () {
 };
 
 Controller.prototype.resetAll = function () {
+    this.curDay = 0;
+    if(this.curScenario != undefined)
+      this.curScenario.reset();
     this.view.resetDisplay();
     return true;
 };
@@ -59,13 +62,12 @@ Controller.prototype.getDay = function () {
 };
 
 Controller.prototype.runSim = function (numDays) {
-    console.log("curday: " + this.curDay);
     this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
     //if its the first day, we need to create the graphs
     if(this.curDay==0){
         this.view.drawChart(this.view.chartContexts[0]);
     }
-    var daysToRun = (typeof numDays === 'undefined') ? 1 : numdays;
+    var daysToRun = (typeof numDays === 'undefined') ? 1 : numDays;
     for (var i = 0; i < daysToRun; i++) {
         //run production for each of the nodes
         this.curScenario.nodes.forEach(function (element) {

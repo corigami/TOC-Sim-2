@@ -22,10 +22,22 @@ View.prototype.init = function (_controller) {
     this.$menu = $('#menu');
     this.$headerText = $('#headertext');
     this.$buttonContainer = $('#ctrl-container');
-    this.$runButton = this.$buttonContainer.find('#next-btn');
+    this.$runButton = this.$buttonContainer.find('#run-btn');
+    this.$5Button = this.$buttonContainer.find('#5-btn');
+    this.$10Button = this.$buttonContainer.find('#10-btn');
     var temp_ctrl = this.controller;
     this.$runButton.click(function(){
+        if(temp_ctrl.curDay == 0){
+            $('#5-btn').fadeIn(500);
+            $('#10-btn').fadeIn(500);
+        }
         temp_ctrl.runSim();
+    });
+    this.$5Button.click(function(){
+        temp_ctrl.runSim(5);
+    });
+    this.$10Button.click(function(){
+        temp_ctrl.runSim(10);
     });
    // this.createChartArea(this.$main,"chart");
 };
@@ -36,6 +48,7 @@ View.prototype.init = function (_controller) {
 View.prototype.resetDisplay = function () {
     this.$main.text("");
     this.$menu.empty();
+    this.myMenu = new Menu(this);
     this.charts = [];   
     this.chartContexts = [];
     var myScenarios = this.controller.getScenarios();
@@ -106,13 +119,14 @@ View.prototype.createChartArea = function(parent, idText){
     var canvasEl = $('<canvas></canvas>'); 
     canvasEl.attr("id", idText);
     parent.append(canvasEl);
-    chartContext = document.getElementById(idText).getContext('2d');
+    var chartContext = document.getElementById(idText).getContext('2d');
     this.chartContexts.push(chartContext);
+    return chartContext;
 };
 
 //todo fix drawChart to draw simulation data
 View.prototype.drawChart = function(ctx){
-    var barChart = new BarChart(chartContext,this.controller.curScenario);
+    var barChart = new BarChart(ctx,this.controller.curScenario);
     this.charts.push(barChart);
     };
 

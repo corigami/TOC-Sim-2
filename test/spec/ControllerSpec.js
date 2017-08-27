@@ -57,9 +57,24 @@ describe("Controller Tests", function () {
            expect(self.controller.getDay()).toEqual(currentDay+1);
        });
 
-       it("should update the display to show the current day of simulation", function(){
-
-       });
+       it("should advance the scenario 5 days when user clicks the '5' button", function(){
+       var scenario = self.controller.getScenarios()[0];
+       self.controller.loadScenario(scenario);
+       self.controller.resetAll();
+        var currentDay = self.controller.getDay();
+        self.controller.runSim(5);
+        expect(self.controller.getDay()).toEqual(currentDay+5);
     });
 
+    it("should advance the scenario 5 days when user clicks the '10' button", function(){
+        var scenario = self.controller.getScenarios()[0];
+        self.controller.loadScenario(scenario);
+        self.controller.resetAll();
+        var currentDay = self.controller.getDay();
+        self.controller.runSim(10);
+        expect(self.controller.getDay()).toEqual(currentDay+10);
+    });
+
+    });
+    self.controller.init();
 });

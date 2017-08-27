@@ -98,7 +98,7 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
             var keyEl = $('<td>' + key + ': </td>');
 
             //we don't want to display arrays and the idNum as user editable data
-            if (key !== "idNum" && !(node[key] instanceof Array)) {
+            if (key !== "idNum" && !(node[key] instanceof Array || node[key] instanceof Node) && node[key] != null) {
                 var valEl = $('<td><input type="text" id="node-' + node.idNum + '-val" value="' +
                     node[key] + '"></td>');
                 rowEl.append(keyEl).append(valEl);

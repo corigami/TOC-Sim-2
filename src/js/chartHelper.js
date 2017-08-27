@@ -8,9 +8,7 @@ this.chart = chartHelper(ctx, this.output, scenario.days);
 };
 
 BarChart.prototype.updateOutput = function(output){
-        this.chart.data.datasets.forEach((dataset) => {
-            dataset.data.push(output);
-        });
+        this.chart.data.datasets[0].data.push(output);
     this.chart.update();
 };
 
