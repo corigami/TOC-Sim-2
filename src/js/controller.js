@@ -78,7 +78,7 @@ Controller.prototype.runSim = function (numDays) {
         this.updateScenarioData();
 
         //update chart
-        this.view.charts[0].updateOutput(this.curScenario.prodData[this.curDay].output);
+        this.view.charts[0].updateData(this.curScenario.prodData[this.curDay]);
 
         //transfer the output of each node to the next
         this.curScenario.nodes.forEach(function (element) {
@@ -98,16 +98,13 @@ Controller.prototype.updateScenarioData = function(){
     data.output = this.curScenario.nodes[this.curScenario.nodes.length-1].prodData[this.curDay].output;
 
     //efficency, wip, and missed ops are totals of all nodes
-    var eff = data.effciency;
-    var wip = data.wip;
-    var missedOps = data.missedOps;
     this.curScenario.nodes.forEach(function (node) {
         production = node.prodData[this.curDay];
-        missedOps += production.missedOps;
-        wip += production.wip;
-        eff += production.effciency;
+        data.missedOps += production.missedOps;
+        data.wip += production.wip;
+        data.eff += production.effciency;
     }, this);
-    eff = eff / this.curScenario.nodes.length;
+    data.eff = data.eff / this.curScenario.nodes.length;
     this.curScenario.prodData.push(data);
 };
 
