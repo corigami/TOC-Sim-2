@@ -1,5 +1,8 @@
 /* global $, Controller */
-
+//TODO add option ability to change node values.
+//TODO add resetAll Capability
+//TODO add stacked chart to show WIP
+//TODO add charts for individual Nodes
 var View = function () {
     var controller,
         myMenu,
