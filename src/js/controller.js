@@ -65,10 +65,15 @@ Controller.prototype.runSim = function (numDays) {
     this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
     //if its the first day, we need to create the graphs
     if(this.curDay==0){
-        this.view.drawChart(this.view.chartContexts[0]);
+        for(var i = 0; i < this.view.chartContexts.length; i++){
+            var title;
+            title = (i==0)? "System Output" : "Node " + i + " Output";
+            this.view.drawChart(this.view.chartContexts[i], title);
+        }
     }
     var daysToRun = (typeof numDays === 'undefined') ? 1 : numDays;
     for (var i = 0; i < daysToRun; i++) {
+        console.log("running for :" + daysToRun + " days, on day: " + i);
         //run production for each of the nodes
         this.curScenario.nodes.forEach(function (element) {
             element.runSim(this.curDay);
@@ -77,8 +82,13 @@ Controller.prototype.runSim = function (numDays) {
         //update scenario data
         this.updateScenarioData();
 
-        //update chart
+        //update main chart
         this.view.charts[0].updateData(this.curScenario.prodData[this.curDay]);
+
+        //update node charts
+        for(var j = 1; j< this.view.charts.length; j++){
+            this.view.charts[j].updateData(this.curScenario.nodes[j-1].prodData[this.curDay])
+        }
 
         //transfer the output of each node to the next
         this.curScenario.nodes.forEach(function (element) {
@@ -88,6 +98,11 @@ Controller.prototype.runSim = function (numDays) {
         this.curDay++;
         
     }
+    //now that we are done calculating everything, we can update the charts in the view.
+    for(var i = 0; i< this.view.charts.length; i++){
+        this.view.charts[i].chart.update();
+    }
+
 
 };
 

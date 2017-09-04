@@ -108,9 +108,10 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
         nodeDetailContainer.append(nodeTable);
         nodeItem.append(nodeDetailContainer);
         this.$menuList.append(nodeItem);
-
     }, this);
+    myView.createNodeChartAreas();
     myView.showButtons();
+
 };
 
 /**

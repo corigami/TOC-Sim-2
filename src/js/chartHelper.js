@@ -1,10 +1,10 @@
 /*global $,*/
 
-var BarChart = function (ctx, scenario) {
+var BarChart = function (ctx, scenario, title) {
     this.output = [];
     this.missedOps = [];
     this.wip = [];
-    this.chart = chartHelper(ctx, this.output, this.missedOps, this.wip, scenario.days);
+    this.chart = chartHelper(ctx, this.output, this.missedOps, this.wip, scenario.days, title);
 };
 
 
@@ -13,7 +13,7 @@ BarChart.prototype.updateData = function(newData){
     this.updateOutput(newData.output);
     this.updateMissedOps(newData.missedOps);
     this.updateWIP(newData.wip);
-    this.chart.update();
+    //this.chart.update();
 }
 
 BarChart.prototype.updateOutput = function (output) {
@@ -28,7 +28,7 @@ BarChart.prototype.updateWIP = function (WIP) {
     this.chart.data.datasets[2].data.push(WIP);
 };
 
-var chartHelper = function (ctx, output, missedOps, wip, _labels) {
+var chartHelper = function (ctx, output, missedOps, wip, _labels, chartTitle) {
     var graph = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -61,6 +61,10 @@ var chartHelper = function (ctx, output, missedOps, wip, _labels) {
                 }]
         },
         options: {
+            title: {
+                display: true,
+                text: chartTitle
+            },
             scales: {
                 xAxes: [{
                     stacked: true

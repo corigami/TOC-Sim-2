@@ -1,7 +1,6 @@
 /* global $, Controller */
 //TODO add option ability to change node values.
 //TODO add resetAll Capability
-//TODO add charts for individual Nodes
 var View = function () {
     var controller,
         myMenu,
@@ -57,7 +56,7 @@ View.prototype.resetDisplay = function () {
     this.myMenu.buildScenarioMenu(myScenarios);
     this.$menu = this.myMenu.getMenu();
     this.setHeader('ToC Simulator 2.0');
-    this.createChartArea(this.$main,"chart");
+    this.createChartArea(this.$main,"chart",400);
 };
 
 /**
@@ -117,8 +116,8 @@ View.prototype.hideButtons = function () {
 //todo add various visual representations of data
 
 //todo add function to chart data after a simulation is run.
-View.prototype.createChartArea = function(parent, idText){
-    var canvasEl = $('<canvas></canvas>'); 
+View.prototype.createChartArea = function(parent, idText, height){
+    var canvasEl = $('<canvas height=' + height +'></canvas>'); 
     canvasEl.attr("id", idText);
     parent.append(canvasEl);
     var chartContext = document.getElementById(idText).getContext('2d');
@@ -127,13 +126,17 @@ View.prototype.createChartArea = function(parent, idText){
 };
 
 //todo fix drawChart to draw simulation data
-View.prototype.drawChart = function(ctx){
-    var barChart = new BarChart(ctx,this.controller.curScenario);
+View.prototype.drawChart = function(ctx, title){
+    var barChart = new BarChart(ctx,this.controller.curScenario, title);
     this.charts.push(barChart);
     };
 
+View.prototype.createNodeChartAreas = function(){
+    this.controller.curScenario.nodes.forEach(function(node){
+        var chartLabel = "Node" + node.idNum;
+        console.log("creating context for node " + node.idNum);
+        this.createChartArea(this.$main, chartLabel, 200);
+    },this);
 
-    /*
-    
-    */
+}
 //todo add function to show mapping of data
