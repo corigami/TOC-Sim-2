@@ -115,7 +115,6 @@ View.prototype.hideButtons = function () {
 
 //todo add various visual representations of data
 
-//todo add function to chart data after a simulation is run.
 View.prototype.createChartArea = function(parent, idText, height){
     var canvasEl = $('<canvas height=' + height +'></canvas>'); 
     canvasEl.attr("id", idText);
@@ -125,7 +124,6 @@ View.prototype.createChartArea = function(parent, idText, height){
     return chartContext;
 };
 
-//todo fix drawChart to draw simulation data
 View.prototype.drawChart = function(ctx, title){
     var barChart = new BarChart(ctx,this.controller.curScenario, title);
     this.charts.push(barChart);
@@ -139,4 +137,5 @@ View.prototype.createNodeChartAreas = function(){
     },this);
 
 }
+
 //todo add function to show mapping of data

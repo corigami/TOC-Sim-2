@@ -63,7 +63,8 @@ var chartHelper = function (ctx, output, missedOps, wip, _labels, chartTitle) {
         options: {
             title: {
                 display: true,
-                text: chartTitle
+                text: chartTitle,
+                position: 'left'
             },
             scales: {
                 xAxes: [{
