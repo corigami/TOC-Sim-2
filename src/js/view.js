@@ -1,5 +1,4 @@
 /* global $, Controller */
-//TODO add option ability to change node values.
 //TODO add resetAll Capability
 var View = function () {
     var controller,
