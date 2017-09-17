@@ -60,7 +60,7 @@ Node.prototype.runSim = function (day) {
     this.prodData[day + 1] = new ProdData(); //initialize tomorrows production data
     production.capacity = this.calcCap(); //update the day's capacity and Works In Progress
     this.calcWIP(day);
-
+    
     //calculate the value of our current inventory
     if (this.inputNode != null) { //if we're not the first node
         production.invValue = production.inputInv * this.inputNode.prodValue

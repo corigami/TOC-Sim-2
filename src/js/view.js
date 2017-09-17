@@ -132,7 +132,6 @@ View.prototype.drawChart = function(ctx, title){
 View.prototype.createNodeChartAreas = function(){
     this.controller.curScenario.nodes.forEach(function(node){
         var chartLabel = "Node" + node.idNum;
-        console.log("creating context for node " + node.idNum);
         this.createChartArea(this.$main, chartLabel, 200);
     },this);
 

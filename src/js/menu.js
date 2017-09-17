@@ -99,10 +99,14 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
 
             //we don't want to display arrays and the idNum as user editable data
             if (key !== "idNum" && !(node[key] instanceof Array || node[key] instanceof Node) && node[key] != null) {
-                var valEl = $('<td><input type="text" id="node-' + node.idNum + '-val" value="' +
-                    node[key] + '"></td>');
+                var idText = "node-" + node.idNum +"-" + key + "-val";
+                var valEl = $('<td><input type="text" id="'+ idText + '" value="' + node[key] + '"></td>');
                 rowEl.append(keyEl).append(valEl);
                 nodeTable.append(rowEl);
+                //update the node if user changes values.
+                valEl.change(function(){
+                    node[key] = parseFloat($('#'+idText).val());
+                });
             }
         });
         nodeDetailContainer.append(nodeTable);

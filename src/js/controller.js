@@ -62,7 +62,6 @@ Controller.prototype.getDay = function () {
 };
 
 Controller.prototype.runSim = function (numDays) {
-    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
     //if its the first day, we need to create the graphs
     if(this.curDay==0){
         for(var i = 0; i < this.view.chartContexts.length; i++){
@@ -73,7 +72,6 @@ Controller.prototype.runSim = function (numDays) {
     }
     var daysToRun = (typeof numDays === 'undefined') ? 1 : numDays;
     for (var i = 0; i < daysToRun; i++) {
-        console.log("running for :" + daysToRun + " days, on day: " + i);
         //run production for each of the nodes
         this.curScenario.nodes.forEach(function (element) {
             element.runSim(this.curDay);
@@ -94,7 +92,7 @@ Controller.prototype.runSim = function (numDays) {
         this.curScenario.nodes.forEach(function (element) {
             element.transferOutput(this.curDay);
         }, this);
-        this.curScenario.days.push(this.curDay);
+        this.curScenario.days.push(this.curDay+1);
         this.curDay++;
         
     }
@@ -103,7 +101,7 @@ Controller.prototype.runSim = function (numDays) {
         this.view.charts[i].chart.update();
     }
 
-
+    this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
 };
 
 Controller.prototype.updateScenarioData = function(){
