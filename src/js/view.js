@@ -1,5 +1,4 @@
 /* global $, Controller */
-//TODO add resetAll Capability
 var View = function () {
     var controller,
         myMenu,
@@ -25,6 +24,7 @@ View.prototype.init = function (_controller) {
     this.$runButton = this.$buttonContainer.find('#run-btn');
     this.$5Button = this.$buttonContainer.find('#5-btn');
     this.$10Button = this.$buttonContainer.find('#10-btn');
+    this.$reloadButton = $('#reload-button');
     var temp_ctrl = this.controller;
     this.$runButton.click(function(){
         if(temp_ctrl.curDay == 0){
@@ -39,7 +39,10 @@ View.prototype.init = function (_controller) {
     this.$10Button.click(function(){
         temp_ctrl.runSim(10);
     });
-   // this.createChartArea(this.$main,"chart");
+    this.$reloadButton.click(function() {
+           $(this).toggleClass("flip");
+           temp_ctrl.resetAll();
+    });
 };
 
 /**
@@ -56,6 +59,7 @@ View.prototype.resetDisplay = function () {
     this.$menu = this.myMenu.getMenu();
     this.setHeader('ToC Simulator 2.0');
     this.createChartArea(this.$main,"chart",400);
+    this.hideButtons();
 };
 
 /**
@@ -109,7 +113,10 @@ View.prototype.showButtons = function () {
  * Hides the simulation navigation buttons
  */
 View.prototype.hideButtons = function () {
-    this.$buttonContainer.hide();
+    this.$buttonContainer.fadeOut(500);
+    this.$reloadButton.fadeOut(500,function(){
+        $(this).removeClass("flip");
+    });
 };
 
 //todo add various visual representations of data

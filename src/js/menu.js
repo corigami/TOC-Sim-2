@@ -45,6 +45,7 @@ Menu.prototype.buildScenarioMenu = function (scenarios) {
         toggleMenu();
         myView.setHeader("Custom Scenario");
         menu.buildCustomScenarioMenu();
+        myView.$reloadButton.show();
     });
     this.$menuList.append(menuItem);
 
@@ -58,6 +59,7 @@ Menu.prototype.buildScenarioMenu = function (scenarios) {
         menuItem.click(function () {
             toggleMenu();
             myView.controller.loadScenario(scenario);
+            myView.$reloadButton.show();
         });
         this.$menuList.append(menuItem);
     }, this);

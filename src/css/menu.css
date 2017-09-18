@@ -74,6 +74,21 @@ a:hover {
     user-select: none;
 }
 
+#reload-button {
+    height: 30px;
+    position: relative;
+    top: -100px;
+    left: 100px;
+    z-index: 1;
+    -moz-transition: transform 1s;
+    -webkit-transition: transform 1s;
+    transition: transform 1s;
+}
+
+.flip {
+    transform: rotate(360deg);
+  }
+
 #menuToggle > input {
     display: block;
     width: 40px;
