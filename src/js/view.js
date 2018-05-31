@@ -144,15 +144,15 @@ View.prototype.toggleView = function(){
 
 View.prototype.showCharts = function () {
     console.log("Show Charts");
-    this.$pertView.hide();
-    this.$chartView.show();
+    $('#pert-container').hide();
+    $('#chart-container').show();
     this.viewType = 'charts';
 };
 
 View.prototype.showPert = function () {
     console.log("Show Pert");
-    this.$pertView.show();
-    this.$chartView.hide();
+    $('#pert-container').show();
+    $('#chart-container').hide();
     this.viewType = 'pert';
 }
 
