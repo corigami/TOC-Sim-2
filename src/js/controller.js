@@ -77,7 +77,6 @@ Controller.prototype.runSim = function (numDays) {
             element.runSim(this.curDay);
         }, this);
 
-        //update scenario data
         this.updateScenarioData();
 
         //update main chart
@@ -100,7 +99,6 @@ Controller.prototype.runSim = function (numDays) {
     for(var i = 0; i< this.view.charts.length; i++){
         this.view.charts[i].chart.update();
     }
-
     this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
 };
 
@@ -123,6 +121,27 @@ Controller.prototype.updateScenarioData = function(){
 
 Controller.prototype.loadScenario = function (scenario) {
     this.curScenario = scenario;
+    this.view.setHeader(this.curScenario.getName());
+    this.view.myMenu.buildScenarioDetailsMenu(this.curScenario);
+};
+
+/**
+ * Creates generic nodes that can be updated.
+ */
+Controller.prototype.loadCustom = function () {
+    var myData = {};
+    myData.name = "Custom";
+    myData.description = "A custom scenario";
+    myData.simType = $('#simType').val();
+    myData.nodes = [];
+    var numNodes = $('#nodes').val();
+    for (var i = 1; i <= numNodes; i++){
+        var nodeData = {};
+        nodeData.idNum = i;
+        nodeData.unitName = 'Item ' + i;
+        myData.nodes.push(new Node(nodeData));
+    }
+    this.curScenario = new Scenario(myData);
     this.view.setHeader(this.curScenario.getName());
     this.view.myMenu.buildScenarioDetailsMenu(this.curScenario);
 };

@@ -42,7 +42,7 @@ Menu.prototype.buildScenarioMenu = function (scenarios) {
     menuItem.append('<p class="scenario-title">Custom Scenario</p>');
     menuItem.append('<p class="scenario-desc">Choose this to define your own nodes</p>');
     menuItem.click(function () {
-        toggleMenu();
+       // toggleMenu();
         myView.setHeader("Custom Scenario");
         menu.buildCustomScenarioMenu();
         myView.$reloadButton.show();
@@ -86,7 +86,7 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
         var nodeItem,
             nodeDetailContainer,
             nodeTable;
-
+        console.log(node);
         nodeItem = $('<li></li>');
         nodeItem.attr("class", "scenario-node-details");
         nodeDetailContainer = $('<div></div>');
@@ -119,15 +119,26 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
     myView.createNodeChartAreas();
     myView.showCharts();
     myView.showButtons();
-
-};
+}; //end buildScenarioDetailsMenu()
 
 /**
  * Builds the menu for user to input custom scenario options.
  */
 Menu.prototype.buildCustomScenarioMenu = function () {
-    //TODO build logic for this function
-    this.menuTitle = "Input Custom Node Parameters"
+    var myView = this.view;
+    this.$menuList.empty();
+    this.buildMenuHeader('Custom Scenario Details');
+    var customDetailContainer = $('<div id="custom-settings" class="custom-settings">' +
+                                    '<p> Number of Nodes: <input id="nodes" class="settings-input" type="text" name="Stations" value="5"></p>' +
+                                    '<p>Simulation Type: <select id="simType" name="simType" class="settings-input select-box"> ' +
+                                    '<option value="Normal">Normal</option><option value="Network">Network</option></select></p>' +
+                                    '<button id="load-custom-button" class="load-custom-button" onClick="" type="button" >Load Scenario</button>' +
+                                    '</div>');
+
+    this.$menuList.append(customDetailContainer);
+    $('#load-custom-button').click(function(){
+        myView.controller.loadCustom();
+    });
 };
 
 /**
@@ -150,7 +161,6 @@ Menu.prototype.buildMenuHeader = function (headerText) {
  */
 Menu.prototype.getMenu = function () {
     return this.$menuElement;
-
 };
 
 /**

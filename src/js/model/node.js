@@ -19,7 +19,6 @@ var Node = function (data) {
 
     //arrays
     var prodData; //data that stores simulation results
-    
     this.init(data);
 };
 
@@ -28,7 +27,7 @@ var Node = function (data) {
  * @param data data to initialize the node with.
  */
 Node.prototype.init = function (data) {
-    this.idNum = data.idNumber;
+    this.idNum = data.idNum;
     this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 5 : data.baseCapacity; //default amount of what the node can produce
     this.capRange = (typeof data.capRange === 'undefined') ? 5 : data.capRange; //initial amount of inventory initially in the queue
     this.initWIP = (typeof data.initWIP === 'undefined') ? 0 : data.initWIP;
