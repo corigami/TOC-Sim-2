@@ -21,6 +21,7 @@ Scenario.prototype.init = function (data) {
     this.name = data.name;
     this.description = data.description;
     this.simType = data.simType;
+    console.log(" Scenario Constructor: " + this.simType);
     this.nodes = [];
     this.prodData = [];
     this.days = [];
@@ -52,7 +53,7 @@ Scenario.prototype.getNodes = function () {
  * Connects each node to each other
  */
 Scenario.prototype.connectNodes = function () {
-    if (this.simType = "Normal") {
+    if (this.simType == "Normal") {
         for (var i = 0; i < this.nodes.length; i++) {
             if (i != 0) {
                 this.nodes[i].inputNode = this.nodes[i - 1];

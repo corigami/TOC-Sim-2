@@ -1,8 +1,18 @@
-/**
+/* global */
+
+/******************************************************************************************************************
+ *
+ *                                                    Controller Object
+ *
+ ******************************************************************************************************************/
+
+
+/****************************************************************
+ * Constructor
  * Definies the controller for the Simulator
  * @param view The view connected to the controller
  * @constructor
- */
+ *****************************************************************/
 var Controller = function () {
     var self = this;
     var view,
@@ -15,9 +25,10 @@ var Controller = function () {
     this.init();
 };
 
-/**
+/******************************************************************
+ * Init
  * Initializes the controller
- */
+ *****************************************************************/
 Controller.prototype.init = function () {
     this.view = new View();
     this.view.init(this);
@@ -29,6 +40,10 @@ Controller.prototype.init = function () {
     this.view.resetDisplay();
 };
 
+/******************************************************************
+ * resetAll
+ * Resets the controller to it's initial state
+ *****************************************************************/
 Controller.prototype.resetAll = function () {
     this.curDay = 0;
     if(this.curScenario != undefined)
@@ -36,6 +51,11 @@ Controller.prototype.resetAll = function () {
     this.view.resetDisplay();
     return true;
 };
+
+/******************************************************************
+ *                       Getters and Setters
+ * 
+ *****************************************************************/
 
 Controller.prototype.getView = function () {
     return this.view;
@@ -45,12 +65,20 @@ Controller.prototype.getScenarios = function () {
     return this.scenarios;
 };
 
-Controller.prototype.setModel = function (model) {
-    this.model = model;
+Controller.prototype.getCurrentScenario = function () {
+    return this.curScenario;
+};
+
+Controller.prototype.setCurrentScenario = function (scenario) {
+    this.curScenario = scenario;
 };
 
 Controller.prototype.getModel = function () {
     return this.model;
+};
+
+Controller.prototype.setModel = function (model) {
+    this.model = model;
 };
 
 Controller.prototype.getModelName = function () {
@@ -61,6 +89,11 @@ Controller.prototype.getDay = function () {
     return this.curDay;
 };
 
+/******************************************************************
+ * runSim
+ * runs the simulation for one or more days (if specified)
+ * @param numDays The number of days to run the simulator for
+ *****************************************************************/
 Controller.prototype.runSim = function (numDays) {
     //if its the first day, we need to create the graphs
     if(this.curDay==0){
@@ -77,6 +110,7 @@ Controller.prototype.runSim = function (numDays) {
             element.runSim(this.curDay);
         }, this);
 
+        //updates the data for the current scenario
         this.updateScenarioData();
 
         //update main chart
@@ -100,8 +134,12 @@ Controller.prototype.runSim = function (numDays) {
         this.view.charts[i].chart.update();
     }
     this.view.setHeader(this.curScenario.getName() + " - Day:  " + this.curDay);
-};
+};//end runSim()
 
+/******************************************************************
+ * updateScenarioData
+ * updates the current scenarios data to be used for graphs
+ *****************************************************************/
 Controller.prototype.updateScenarioData = function(){
     //we'll use the ProdData class to store information for the scenario
     var data = new ProdData();
@@ -119,15 +157,23 @@ Controller.prototype.updateScenarioData = function(){
     this.curScenario.prodData.push(data);
 };
 
+/******************************************************************
+ * loadScenario
+ * loads the scenario object into the the current simulation
+ * @param scenario - scenario object to load
+ *****************************************************************/
 Controller.prototype.loadScenario = function (scenario) {
     this.curScenario = scenario;
     this.view.setHeader(this.curScenario.getName());
     this.view.myMenu.buildScenarioDetailsMenu(this.curScenario);
 };
 
-/**
- * Creates generic nodes that can be updated.
- */
+/******************************************************************
+ * loadCustom
+ * creates default data and scenario data and loads the scenario object
+ * into the the current simulation
+ * @param scenario - scenario object to load
+ *****************************************************************/
 Controller.prototype.loadCustom = function () {
     var myData = {};
     myData.name = "Custom";
@@ -141,7 +187,7 @@ Controller.prototype.loadCustom = function () {
         nodeData.unitName = 'Item ' + i;
         myData.nodes.push(new Node(nodeData));
     }
-    this.curScenario = new Scenario(myData);
-    this.view.setHeader(this.curScenario.getName());
-    this.view.myMenu.buildScenarioDetailsMenu(this.curScenario);
+    this.setCurrentScenario(new Scenario(myData));
+    this.view.setHeader(this.getCurrentScenario().getName());
+    this.view.myMenu.buildScenarioDetailsMenu(this.getCurrentScenario());
 };

@@ -143,14 +143,12 @@ View.prototype.toggleView = function(){
 };
 
 View.prototype.showCharts = function () {
-    console.log("Show Charts");
     $('#pert-container').hide();
     $('#chart-container').show();
     this.viewType = 'charts';
 };
 
 View.prototype.showPert = function () {
-    console.log("Show Pert");
     $('#pert-container').show();
     $('#chart-container').hide();
     this.viewType = 'pert';

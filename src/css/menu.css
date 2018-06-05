@@ -53,14 +53,34 @@ a:hover {
 }
 
 .scenario-node-details {
+    display: flex;
     margin-left: 4px;
     text-align: center;
     margin-bottom: 8px;
+    list-style-type: none;
+}
+
+.nodeDetailContainer{
+    background-color: #7F7FFF;
+    display:inline-block
+}
+
+.networkContainer {
+    min-width: 200px;
+    height: 200px;
+    background-color: lightgrey;
+    left: 300px;
+    top: -220px;
 }
 
 .node-details {
     text-align: left;
     margin: 4px;
+}
+
+.custom-settings {
+    margin: 2px 0 2px 6px;
+    padding: 6px;
 }
 
 #menuToggle {
