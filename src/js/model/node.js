@@ -233,11 +233,10 @@ NetworkNode.prototype.runSim = function (day) {
     }
 
     /*
-     * Calculate output - now we need to "do work"...
-     * if the wip for the day is greater than today's capacity , our output is equal to our capacity,
-     * and we have 0 missed ops.
-     * The starting inventory for tomorrow will be what's left over. And our missed ops will be equal
-     * to 0 if we have more wip than capacity or capacity - wip if we don't
+     * Calculate output - now we need to "do work"... if the wip for the day is greater than today's capacity , 
+     * our output is equal to our capacity, and we have 0 missed ops. The starting inventory for tomorrow will 
+     * be what's left over. And our missed ops will be equal to 0 if we have more wip than capacity or capacity - wip 
+     * if we don't
      */
 
     if (production.wip >= production.capacity) {
@@ -250,7 +249,6 @@ NetworkNode.prototype.runSim = function (day) {
         production.missedOps = production.capacity - production.wip;
         this.prodData[day + 1].wip = 0;
     }
-    //carry over leftover inventory to tomorrows inputInventory (don't need to do for first node)
     //this is just for data
 
     //calculate the value of today's work
