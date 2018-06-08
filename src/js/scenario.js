@@ -21,19 +21,18 @@ Scenario.prototype.init = function (data) {
     this.name = data.name;
     this.description = data.description;
     this.simType = data.simType;
-    console.log(" Scenario Constructor: " + this.simType);
     this.nodes = [];
     this.prodData = [];
-    this.days = [];
+    this.days = []; 
 
     //create an array of Nodes from the raw data.
     data.nodes.forEach(function (nodeData) {
-        var node = new Node(nodeData);
-        this.nodes.push(node);
+        if(this.simType == 'Network'){
+            this.nodes.push(new NetworkNode(nodeData));
+       }else{
+        this.nodes.push(new Node(nodeData));
+       }
     }, this);
-
-    this.connectNodes();
-
 };
 
 Scenario.prototype.reset = function(){
@@ -50,7 +49,7 @@ Scenario.prototype.getNodes = function () {
 
 
 /**
- * Connects each node to each other
+ * Connects each node to each other - only required for normal mode.
  */
 Scenario.prototype.connectNodes = function () {
     if (this.simType == "Normal") {
@@ -64,7 +63,6 @@ Scenario.prototype.connectNodes = function () {
 
         }
     }
-    //todo add logic for SimType = "Network"
 }
 
 /**
@@ -97,5 +95,24 @@ Scenario.prototype.updateProdData = function(production, day){
     }else{
         this.prodData[day] = production;
     }
+}
 
+Scenario.prototype.getNodeById = function(idNum){
+    var nodeToReturn = null;
+    this.nodes.forEach(function(node){
+        if(node.idNum == idNum){
+            nodeToReturn = node;
+        }
+    });
+    return nodeToReturn;
+}
+
+Scenario.prototype.getNodeByName = function(itemName){
+    var nodeToReturn = null;
+    this.nodes.forEach(function(node){
+        if(node.unitName == itemName){
+            nodeToReturn = node;
+        }
+    });
+    return nodeToReturn;
 }

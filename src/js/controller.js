@@ -17,7 +17,8 @@ var Controller = function () {
     var self = this;
     var view,
         scenarios,
-        model;
+        model,
+        connected = false;
 
     //scenario variables
     var curScenario,
@@ -95,6 +96,9 @@ Controller.prototype.getDay = function () {
  * @param numDays The number of days to run the simulator for
  *****************************************************************/
 Controller.prototype.runSim = function (numDays) {
+    if(!this.connected){
+        this.curScenario.connectNodes();
+    }
     //if its the first day, we need to create the graphs
     if(this.curDay==0){
         for(var i = 0; i < this.view.chartContexts.length; i++){
@@ -106,8 +110,8 @@ Controller.prototype.runSim = function (numDays) {
     var daysToRun = (typeof numDays === 'undefined') ? 1 : numDays;
     for (var i = 0; i < daysToRun; i++) {
         //run production for each of the nodes
-        this.curScenario.nodes.forEach(function (element) {
-            element.runSim(this.curDay);
+        this.curScenario.nodes.forEach(function (node) {
+            node.runSim(this.curDay);
         }, this);
 
         //updates the data for the current scenario
@@ -122,9 +126,16 @@ Controller.prototype.runSim = function (numDays) {
         }
 
         //transfer the output of each node to the next
-        this.curScenario.nodes.forEach(function (element) {
-            element.transferOutput(this.curDay);
+        this.curScenario.nodes.forEach(function (node) {
+            node.transferOutput(this.curDay);
         }, this);
+
+        //update required resources display
+        if(this.curScenario.simType = 'Network'){
+            this.curScenario.nodes.forEach(function (node) {
+                this.view.myMenu.updateRequiredResource(node);
+            }, this);
+        }
         this.curScenario.days.push(this.curDay+1);
         this.curDay++;
         
@@ -180,14 +191,48 @@ Controller.prototype.loadCustom = function () {
     myData.description = "A custom scenario";
     myData.simType = $('#simType').val();
     myData.nodes = [];
-    var numNodes = $('#nodes').val();
+    var numNodes = parseInt($('#nodes').val());
     for (var i = 1; i <= numNodes; i++){
         var nodeData = {};
         nodeData.idNum = i;
         nodeData.unitName = 'Item ' + i;
-        myData.nodes.push(new Node(nodeData));
+        if(myData.simType == 'Network'){
+             myData.nodes.push(new NetworkNode(nodeData));
+        }else{
+            myData.nodes.push(new Node(nodeData));
+        }
     }
     this.setCurrentScenario(new Scenario(myData));
     this.view.setHeader(this.getCurrentScenario().getName());
     this.view.myMenu.buildScenarioDetailsMenu(this.getCurrentScenario());
 };
+
+/******************************************************************
+ * updateResource
+ * adds required resources (item) to node
+ * @param node - node to add required resource to
+ * @param item - text name of item to add
+ *****************************************************************/
+Controller.prototype.updateResource = function (node, item) {
+    var idString = '#networkContainer-' + node.idNum;
+    var reqQty = parseInt($(idString + ' [name=requiredBox]').val());
+    var onHandQty = parseInt($(idString + ' [name=onHandBox]').val());
+    node.updateRequiredResource(item, reqQty);
+    node.updateOnHandQty(item, onHandQty);
+
+    //update our node matrix (inputs and outputs)
+    var nodeToOutput = this.curScenario.getNodeByName(item);
+    nodeToOutput.addOutputNode(node);
+    node.addInputNode(nodeToOutput);
+}
+
+Controller.prototype.removeResource = function (node, item) {
+    console.log("Removing: " + item + "  from node " + node.idNum);
+    node.removeRequiredResource(item);
+    node.deleteOnHandQty(item);
+
+    //update our node matrix (inputs and outputs)
+    var nodeToOutput = this.curScenario.getNodeByName(item);
+    nodeToOutput.removeOutputNode(node);
+    node.removeInputNode(nodeToOutput);
+}

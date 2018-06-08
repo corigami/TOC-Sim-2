@@ -54,6 +54,7 @@ View.prototype.init = function (_controller) {
     this.$viewButton.click(function(){
         tempView.toggleView();
     });
+ 
 };
 
 /**

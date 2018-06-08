@@ -111,7 +111,7 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
             var keyEl = $('<td>' + key + ': </td>');
 
             //we don't want to display arrays and the idNum as user editable data
-            if (key !== "idNum" && !(node[key] instanceof Array || node[key] instanceof Node) && node[key] != null) {
+            if (key !== "idNum" && !(node[key] instanceof Array ||node[key] instanceof Map || node[key] instanceof Node) && node[key] != null) {
                 var idText = "node-" + node.idNum +"-" + key + "-val";
                 var valEl = $('<td><input type="text" id="'+ idText + '" value="' + node[key] + '"></td>');
                 rowEl.append(keyEl).append(valEl);
@@ -134,23 +134,102 @@ Menu.prototype.buildScenarioDetailsMenu = function (scenario) {
             rowEl.append(dataEl1).append(dataEl2);
             dataEl2.append(networkButton);
             nodeTable.append(rowEl);
-            networkButton.click(function(el){
-                var networkPane =  $('#networkContainer-' + i);
-                networkPane.toggle();
+            var parent = this;
+            var idString = '#networkContainer-'+ i;
+            networkButton.click(function(){
+                parent.toggleNodes(idString);
               });
-              networkContainer = $('<div id="networkContainer-' + i + '" class="networkContainer"> </div>');
-              nodeItem.append(networkContainer);
+            var addNodeButton = $('<button id="addNodeButton-' + i +'" class="addbutton"> Add required resource </button>');
+            networkContainer = $('<div id="networkContainer-' + i + '" class="networkContainer"></div>');
+            networkLabels = $('<div id="networkNodeLabels-' +i+ '">' +
+                                '<div class="resourceLabel">Resource</div>' +
+                                '<div class="resourceLabel">Amount Required</div>' +
+                                '<div class="resourceLabel">On Hand</div>' +
+                            '</div>');
+            var id = i;
+            var buttonId = '#addNodeButton-' + i;
+            addNodeButton.click(function(){
+                parent.updateResource(id, buttonId);
+            });
+            networkContainer.append(networkLabels);
+            networkContainer.append(addNodeButton);
+            networkContainer.hide();
+            nodeItem.append(networkContainer);
         }
-
-
         this.$menuList.append(nodeItem);
         i++;
     }, this);
+
+    $('#networkContainer-1').show();
     buildPert();
     myView.createNodeChartAreas();
     myView.showCharts();
     myView.showButtons();
 }; //end buildScenarioDetailsMenu()
+
+/*****************************************************************
+ * updateResource
+ * 
+ * Helper function that calls the appropriate controller function and updates the
+ * UI
+ * @param id
+ ****************************************************************/
+Menu.prototype.updateResource = function(id, buttonId){
+    var curNode = this.view.controller.curScenario.getNodeById(id);
+    var resourceCont = $('<div class="resourceContainer"></div>');
+    var resource = $('<select id="resource-' + id + '" class="resourceItemBox"></select>');
+    resourceCont.append(resource);
+    var opt = $('<option value="none">Choose...</option>');
+    resource.append(opt);
+    this.view.controller.curScenario.getNodes().forEach(function (node) {
+        if(node.idNum != id && !curNode.hasRequirement(node.unitName)){
+            var opt = $('<option value="' + node.unitName+'">'+ node.unitName + '</option>');
+            resource.append(opt);
+        }
+    });
+    opt = $('<option value="Remove">Remove</option>');
+    resource.append(opt);
+    var previous = '';
+    var controller = this.view.controller;
+    resource.on('click', function(){
+        previous = resource.val();
+    }).change(function(){
+            var resourceItem = resource.val();
+            //if user selects remove, remove the 
+            if(resourceItem == 'Remove' && resourceItem!= 'none'){
+                resourceCont.remove(); 
+                controller.removeResource(curNode, previous);
+            //We are just adding 
+            }else if(previous == 'none'){     
+                controller.updateResource(curNode, resourceItem);
+                resourceCont.attr('id', curNode.idNum + "-" + controller.curScenario.getNodeByName(resourceItem).idNum);
+            //we are changing resources
+            }else{
+                controller.removeResource(curNode, previous);
+                controller.updateResource(curNode, resourceItem);
+            }
+        });
+    var requiredBox = $('<input type="text" name="requiredBox" class="resourceItemBox" value="1"></input>');
+    requiredBox.change(function(){
+        controller.updateResource(curNode, resource.val()); 
+    });
+
+    var onHandBox = $('<input type="text" name="onHandBox" class="resourceItemBox" value="1"></input>');
+    onHandBox.change(function(){
+        controller.updateResource(curNode, resource.val());  
+    });
+    resourceCont.append(requiredBox).append(onHandBox);
+    resourceCont.insertBefore(buttonId);
+}
+
+Menu.prototype.toggleNodes = function(id){
+    if ($(id).is(":visible")){
+        $(id).hide(200);
+    }else{
+        $('.networkContainer').hide(200);
+        $(id).show(200);
+    }
+};
 
 /*****************************************************************
  * buildCustomScenarioMenu
@@ -164,7 +243,8 @@ Menu.prototype.buildCustomScenarioMenu = function () {
     var customDetailContainer = $('<div id="custom-settings" class="custom-settings">' +
                                     '<p> Number of Nodes: <input id="nodes" class="settings-input" type="text" name="Stations" value="5"></p>' +
                                     '<p>Simulation Type: <select id="simType" name="simType" class="settings-input select-box"> ' +
-                                    '<option value="Normal">Normal</option><option value="Network">Network</option></select></p>' +
+                                      '<option value="Normal">Normal</option> ' + 
+                                      '<option value="Network" selected="selected">Network</option></select></p>' +
                                     '<button id="load-custom-button" class="load-custom-button" onClick="" type="button" >Load Scenario</button>' +
                                     '</div>');
 
@@ -190,7 +270,13 @@ Menu.prototype.buildMenuHeader = function (headerText) {
     this.$menuElement.append(this.$menuList);
 };
 
-
+Menu.prototype.updateRequiredResource = function(node){
+    node.onHandResources.forEach(function(value,key){
+        var idString = '#' + node.idNum + '-' + this.view.controller.curScenario.getNodeByName(key).idNum;
+        var elem =  $(idString + ' [name=onHandBox]');
+        elem.attr('value', value);
+   }, this);
+}
 
 /****************************************************************************************************************************
  * 
