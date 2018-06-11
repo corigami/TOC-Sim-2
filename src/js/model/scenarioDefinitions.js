@@ -9,7 +9,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 1'
+            unitName: 'Item 1'
         },
         {
             idNum: 2,
@@ -17,7 +17,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 2'
+            unitName: 'Item 2'
         },
         {
             idNum: 3,
@@ -25,7 +25,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 3'
+            unitName: 'Item 3'
         },
         {
             idNum: 4,
@@ -33,7 +33,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 4'
+            unitName: 'Item 4'
         },
         {
             idNum: 5,
@@ -41,7 +41,7 @@ var scenarioDefinitions = [
             initWIP: 4,
             capRange: 5,
             varFactor: 2,
-            unitName: 'item 5'
+            unitName: 'Item 5'
         }
         ]
     }

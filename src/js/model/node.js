@@ -34,8 +34,8 @@ var Node = function (data) {
  */
 Node.prototype.init = function (data) {
     this.idNum = data.idNum;
-    this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 5 : data.baseCapacity; //default amount of what the node can produce
-    this.capRange = (typeof data.capRange === 'undefined') ? 5 : data.capRange; //initial amount of inventory initially in the queue
+    this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 1 : data.baseCapacity; //default amount of what the node can produce
+    this.capRange = (typeof data.capRange === 'undefined') ? 0 : data.capRange; //initial amount of inventory initially in the queue
     this.initWIP = (typeof data.initWIP === 'undefined') ? 0 : data.initWIP;
     this.inputNode = null;
     this.outputNode = null;
@@ -264,16 +264,16 @@ NetworkNode.prototype.runSim = function (day) {
  * Assumes a prodData item as already been created for storing the days values;
  */
 NetworkNode.prototype.calcWIP = function (day) {
+    var node = this;
     var production = this.prodData[day];
     //if we're station 1, our WIP is our capacity
     if (production != undefined) {
         if(this.inputNodes.length == 0){
             production.wip = production.capacity;
         } //act like a regular node, as we don't have any dependancies
-        else if (day != 0) {
+        else  { //if (day != 0)
             var canProduce = true;
             while(canProduce){
-                var i = 1;
                 this.reqResources.forEach(function(value, key){
                     if(this.onHandResources.get(key) < value){
                         canProduce = false;
@@ -286,11 +286,8 @@ NetworkNode.prototype.calcWIP = function (day) {
                         this.onHandResources.set(key, newVal);
                     }, this);
                 }
-                i++;
             }
-            production.wip += this.prodData[day-1].wip;
         }   
-
     }
         
 } 
@@ -344,6 +341,8 @@ NetworkNode.prototype.removeOutputNode = function(node){
 
 NetworkNode.prototype.updateRequiredResource = function(item, qty){
     this.reqResources.set(item, qty);
+    console.log("Node " + this.idNum);
+    console.log(this.reqResources);
 }
 
 NetworkNode.prototype.removeRequiredResource = function(item){

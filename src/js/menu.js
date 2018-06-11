@@ -201,14 +201,15 @@ Menu.prototype.updateResource = function(id, buttonId){
                 controller.removeResource(curNode, previous);
             //We are just adding 
             }else if(previous == 'none'){     
-                controller.updateResource(curNode, resourceItem);
                 resourceCont.attr('id', curNode.idNum + "-" + controller.curScenario.getNodeByName(resourceItem).idNum);
+                controller.updateResource(curNode, resourceItem);
             //we are changing resources
             }else{
                 controller.removeResource(curNode, previous);
                 controller.updateResource(curNode, resourceItem);
             }
         });
+    
     var requiredBox = $('<input type="text" name="requiredBox" class="resourceItemBox" value="1"></input>');
     requiredBox.change(function(){
         controller.updateResource(curNode, resource.val()); 

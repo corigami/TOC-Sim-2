@@ -155,14 +155,15 @@ Controller.prototype.updateScenarioData = function(){
     //we'll use the ProdData class to store information for the scenario
     var data = new ProdData();
     //output for the scenario is the output of the last node.
-    data.output = this.curScenario.nodes[this.curScenario.nodes.length-1].prodData[this.curDay].output;
-
+   // data.output = this.curScenario.nodes[this.curScenario.nodes.length-1].prodData[this.curDay].output;
+    data.output = 0;
     //efficency, wip, and missed ops are totals of all nodes
     this.curScenario.nodes.forEach(function (node) {
         production = node.prodData[this.curDay];
         data.missedOps += production.missedOps;
         data.wip += production.wip;
         data.eff += production.effciency;
+        data.output += production.output;
     }, this);
     data.eff = data.eff / this.curScenario.nodes.length;
     this.curScenario.prodData.push(data);
@@ -214,7 +215,7 @@ Controller.prototype.loadCustom = function () {
  * @param item - text name of item to add
  *****************************************************************/
 Controller.prototype.updateResource = function (node, item) {
-    var idString = '#networkContainer-' + node.idNum;
+    var idString = '#' + node.idNum + "-" + this.curScenario.getNodeByName(item).idNum;
     var reqQty = parseInt($(idString + ' [name=requiredBox]').val());
     var onHandQty = parseInt($(idString + ' [name=onHandBox]').val());
     node.updateRequiredResource(item, reqQty);
