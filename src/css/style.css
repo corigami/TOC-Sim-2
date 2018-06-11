@@ -45,12 +45,31 @@ main {
     padding-top: 20px;
 }
 
+#viewButton{
+    float:right;
+    position: relative;
+    right:80px;
+    top: -70px;
+}
+
+#viewButton img{
+    display:block;
+    width:60px;
+    height:60px;
+}
+
+#pert-container{
+    width:100%;
+    height:600px;
+}
+
 /*--------------Menu----------------*/
 
 
 /*--------------Canvas-------------*/
 
 canvas{
-    width:100%;
-    height:400px;
+    width: 95% !important;
+    height:300px;
+    padding-left: 20px;
 }

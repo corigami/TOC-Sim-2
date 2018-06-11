@@ -15,27 +15,30 @@ Last Modified: 24 Jul 17
     <link rel="stylesheet" href="../src/css/controls.css">
     <script src="../src/js/lib/jquery-3.2.1.js"></script>
     <script src="../src/js/lib/Chart.js"></script>
+    <script src="../src/js/lib/go.js"></script>
 </head>
 
 <body>
 <header id="header">
     <h1 id="headertext">Theory of Constraints Simulator</h1>
+    <div id="viewButton" hidden><img src="img/node.png" ></img>Toggle View</div>
 </header>
 <nav>
     <div id="menuToggle">
         <input title="menuCheckBox" id="menuCheckbox" type="checkbox"/>
         <!-- for :checked attribute -->
-        <span></span>
-        <span></span>
-        <span></span>
+        <span class="menubar"></span>
+        <span class="menubar"></span>
+        <span class="menubar"></span>
         <div id="menu">
         </div>
     </div>
     <img id="reload-button" src="img/reload.svg" hidden>   
 </nav>
-<main id="main" class="center">
-    Choose a scenario by clicking on the menu button in the to the top-left.
-</main>
+<div id="main" class="center">
+    <div id="chart-container"></div>
+    <div id="pert-container"></div>
+</div>
 <div id="ctrl-container" hidden>
     <button id="run-btn" class="ctrl-btn" >Run</button>
     <button id="5-btn" class="ctrl-btn" hidden>5</button>
@@ -47,6 +50,7 @@ Last Modified: 24 Jul 17
 <!-- include source files here... -->
 <script src="../src/js/menu.js"></script>
 <script src="../src/js/chartHelper.js"></script>
+<script src="../src/js/pertHelper.js"></script>
 <script src="../src/js/view.js"></script>
 <script src="../src/js/model/scenarioDefinitions.js"></script>
 <script src="../src/js/model/models.js"></script>

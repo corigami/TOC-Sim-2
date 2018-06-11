@@ -53,14 +53,62 @@ a:hover {
 }
 
 .scenario-node-details {
+    display: flex;
     margin-left: 4px;
     text-align: center;
     margin-bottom: 8px;
+    list-style-type: none;
+}
+
+.nodeDetailContainer{
+    background-color: #7F7FFF;
+    display:inline-block
+}
+
+.networkContainer {
+    min-width: 340px;
+    background-color: lightgrey;
+    margin-left: 18px;
+    text-align: left;
+
+   }
+
+.networkbutton {
+    float: right;
+}
+
+.addbutton {
+    margin-left: 4px;
+}
+
+
+.resourceLabel{
+    width: 33%;
+    margin: 4px auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.resourceItemBox{
+    width: 100px;
+    margin: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+.resourceContainer{
+    width: 100%;
+    margin: 4px 4px 4px 0 ;
 }
 
 .node-details {
     text-align: left;
     margin: 4px;
+}
+
+.custom-settings {
+    margin: 2px 0 2px 6px;
+    padding: 6px;
 }
 
 #menuToggle {
@@ -106,7 +154,7 @@ a:hover {
  * Just a quick hamburger
  */
 
-#menuToggle span {
+#menuToggle .menubar {
     display: block;
     width: 33px;
     height: 4px;
@@ -119,13 +167,16 @@ a:hover {
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
 }
 
-#menuToggle span:first-child {
+#menuToggle .menubar:first-child {
     transform-origin: 0 0;
 }
 
-#menuToggle span:nth-last-child(2) {
+#menuToggle .menubar:nth-last-child(2) {
     transform-origin: 0 100%;
 }
+
+
+
 
 /*
  * Transform all the slices of hamburger
@@ -171,6 +222,7 @@ a:hover {
     transform: translate(-110%, 0);
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
     box-shadow: 5px 5px 5px #777;
+    z-index: 10;
 }
 
 /*

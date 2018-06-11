@@ -1,3 +1,9 @@
+/******************************************************************************************************************
+ *
+ *                                                    Node Object
+ *
+ ******************************************************************************************************************/
+
 
 /**
  * Defines a node object (station)
@@ -19,7 +25,6 @@ var Node = function (data) {
 
     //arrays
     var prodData; //data that stores simulation results
-    
     this.init(data);
 };
 
@@ -28,9 +33,9 @@ var Node = function (data) {
  * @param data data to initialize the node with.
  */
 Node.prototype.init = function (data) {
-    this.idNum = data.idNumber;
-    this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 5 : data.baseCapacity; //default amount of what the node can produce
-    this.capRange = (typeof data.capRange === 'undefined') ? 5 : data.capRange; //initial amount of inventory initially in the queue
+    this.idNum = data.idNum;
+    this.baseCapacity = (typeof data.baseCapacity === 'undefined') ? 1 : data.baseCapacity; //default amount of what the node can produce
+    this.capRange = (typeof data.capRange === 'undefined') ? 0 : data.capRange; //initial amount of inventory initially in the queue
     this.initWIP = (typeof data.initWIP === 'undefined') ? 0 : data.initWIP;
     this.inputNode = null;
     this.outputNode = null;
@@ -168,14 +173,12 @@ Node.prototype.genRandom = function (min, max, varFact) {
     return Math.floor(total / varFactor);
 };
 
+/******************************************************************************************************************
+ *
+ *                                                    Network Node Object
+ *
+ ******************************************************************************************************************/
 
-//TODO extend Node object to NetworkNode to separate functionality
-/*
-********************************************************************************
-Network node declaration
-This section is not complete and is not currently implemented.
-*********************************************************************************
- */
 
 /**
  * Extends the node for network connections;
@@ -183,7 +186,8 @@ This section is not complete and is not currently implemented.
  */
 var NetworkNode = function (data) {
     //Additional arrays required for network.
-    var inputNodes,
+    var scenaro,
+        inputNodes,
         outputNodes, //list of nodes that will receive output
         inventoryItems, //list of items required to produce work and quantity
         reqResources; //list of items and quantity required for each item
@@ -198,9 +202,61 @@ NetworkNode.prototype.init = function (data) {
     Node.prototype.init.call(this, data); // calls super init function
     this.required = null;
     this.inputNodes = []; //nodes that produce the items that this node requires
-    this.inventoryItems = new Map(); //array used to store simulated stock.
+    this.resourceToNodeMap
+    this.onHandResources = new Map(); //array used to store simulated stock.
     this.outputNodes = []; //nodes that receive our output.
     this.reqResources = new Map(); //array to store items and amounts required.
+};
+
+/**
+ * Simulates producing units based on the inventory it currently has.
+ * It then stores its records its production data and transfers its output to nodes in its
+ * outputNodes list.
+ * @param day The day to calculate for
+ */
+NetworkNode.prototype.runSim = function (day) {
+
+    var production = this.prodData[day]; //initialize starting values for day
+    this.prodData[day + 1] = new ProdData(); //initialize tomorrows production data
+    production.capacity = this.calcCap(); //update the day's capacity and Works In Progress
+    this.calcWIP(day);
+    
+    //calculate the value of our current inventory
+    if (this.inputNodes.length != 0) { //if we're not the first node
+        var subTotal = 0;
+        this.onHandResources.forEach(function(value, key){
+            subTotal += value * this.onHandResources.get(key);
+        }, this);
+        production.invValue = subTotal;
+    } else {
+        production.invValue = 0; //initial input has no value;
+    }
+
+    /*
+     * Calculate output - now we need to "do work"... if the wip for the day is greater than today's capacity , 
+     * our output is equal to our capacity, and we have 0 missed ops. The starting inventory for tomorrow will 
+     * be what's left over. And our missed ops will be equal to 0 if we have more wip than capacity or capacity - wip 
+     * if we don't
+     */
+
+    if (production.wip >= production.capacity) {
+        production.missedOps = 0;
+        production.output = production.capacity;
+        //otherwise, our output is limited by our wip for the day, and we have our missed ops is equal to
+        //today's capacity minus our WIP.
+    } else {
+        production.output = production.wip;
+        production.missedOps = production.capacity - production.wip;
+        this.prodData[day + 1].wip = 0;
+    }
+    //this is just for data
+
+    //calculate the value of today's work
+    production.outValue = production.output * this.prodValue;
+
+    //calculate efficiency
+    this.calcEff(day);
+    
 };
 
 /**
@@ -208,16 +264,109 @@ NetworkNode.prototype.init = function (data) {
  * Assumes a prodData item as already been created for storing the days values;
  */
 NetworkNode.prototype.calcWIP = function (day) {
-    //Not Finished!!!!
-    //todo create inventory items based on initWIP values for network simulations
+    var node = this;
+    var production = this.prodData[day];
     //if we're station 1, our WIP is our capacity
-    //if it is the first day, all nodes use the init WIP
-    if (this.idNum === 1) { //if first node, use capacity
-        return this.prodData[day].capacity;
-    } else if (day === 1) {
-        return this.initWIP;
-    } else {
-        //if its not, we have to make a calculation based on whats in the inventory
-        //todo Complelete calcWIP using reqResources and Inventory Item;
+    if (production != undefined) {
+        if(this.inputNodes.length == 0){
+            production.wip = production.capacity;
+        } //act like a regular node, as we don't have any dependancies
+        else  { //if (day != 0)
+            var canProduce = true;
+            while(canProduce){
+                this.reqResources.forEach(function(value, key){
+                    if(this.onHandResources.get(key) < value){
+                        canProduce = false;
+                    }
+                }, this);
+                if(canProduce){ //we have enough resources to make 1 item
+                    production.wip++;
+                    this.onHandResources.forEach(function(value, key){
+                        var newVal = value - this.reqResources.get(key);
+                        this.onHandResources.set(key, newVal);
+                    }, this);
+                }
+            }
+        }   
+    }
+        
+} 
+
+/**
+ * Transfers output of node to input of next node.
+ * Assumes production has been run for the day for all nodes.
+ * @param day The day to calculate for
+ */
+NetworkNode.prototype.transferOutput = function (day) {
+    if (this.outputNodes.length != 0) {
+        var production = this.prodData[day];
+        var output = production.output; 
+        while(output > 0){
+            for(var i = 0; i < this.outputNodes.length && output > 0; i++){
+                var outputNode = this.outputNodes[i];
+                outputNode.updateOnHandQty(this.unitName, outputNode.onHandResources.get(this.unitName)+1);
+                output--;
+            }
+        }
     }
 }
+
+
+
+
+
+NetworkNode.prototype.addInputNode = function(node){
+    if(!this.inputNodes.includes(node)){
+        this.inputNodes.push(node);
+    }
+}
+
+NetworkNode.prototype.removeInputNode = function(node){
+    if(this.inputNodes.includes(node)){
+    this.inputNodes.splice(node,1);
+    }
+}
+
+NetworkNode.prototype.addOutputNode = function(node){
+    if(!this.outputNodes.includes(node)){
+        this.outputNodes.push(node);
+    }
+}
+
+NetworkNode.prototype.removeOutputNode = function(node){
+    if(this.outputNodes.includes(node)){
+        this.outputNodes.splice(node,1);
+        }
+}
+
+NetworkNode.prototype.updateRequiredResource = function(item, qty){
+    this.reqResources.set(item, qty);
+    console.log("Node " + this.idNum);
+    console.log(this.reqResources);
+}
+
+NetworkNode.prototype.removeRequiredResource = function(item){
+    this.reqResources.delete(item);
+}
+
+NetworkNode.prototype.updateOnHandQty = function(item,qty){
+    this.onHandResources.set(item,qty);
+}
+
+NetworkNode.prototype.deleteOnHandQty = function(item){
+    this.onHandResources.delete(item);
+}
+
+NetworkNode.prototype.hasRequirement = function(item){
+   return this.reqResources.has(item);
+}
+
+NetworkNode.prototype.getNodeValue = function(itemName){
+    var value = 0;
+    this.inputNodes.forEach(function(node){
+        if(node.unitName == itemName){
+            value = node.prodValue;
+        }
+    });
+    return value;
+ }
